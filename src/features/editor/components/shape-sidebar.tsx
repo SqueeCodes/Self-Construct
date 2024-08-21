@@ -29,7 +29,9 @@ export const ShapeSidebar = ({
     <aside
       className={cn(
         "bg-white relative border-r z-[40] w-[360px] h-full flex flex-col",
-        activeTool === "shapes" ? "visible" : "hidden",
+        // @ts-ignore
+        activeTool === "shapes" 
+        ? "visible" : "hidden",
       )}
     >
       <ToolSidebarHeader

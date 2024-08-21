@@ -7,9 +7,12 @@ import {
   CIRCLE_OPTIONS,
   RECTANGLE_OPTIONS,
   TRIANGLE_OPTIONS,
-  INVERSE_TRIANGLE_OPTIONS,
-  DIAMOND_OPTIONS
+  DIAMOND_OPTIONS,
+  FILL_COLOR,
+  STROKE_COLOR,
+  STROKE_WIDTH
 } from "../types";
+import { useCanvasEvents } from "./use-canvas-events";
 
 
 const buildEditor = ({
@@ -115,16 +118,33 @@ const buildEditor = ({
 export const useEditor = () => {
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  const [selectedObjects, setSelectedObjects] = useState<fabric.Object[]>([]);
+
+  const [fillColor, setFillColor] = useState(FILL_COLOR);
+  const [strokeColor, setStrokeColor] = useState(STROKE_COLOR);
+  const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
+
 
   useAutoResize({
     canvas,
     container,
   });
 
+
+  useCanvasEvents({
+    canvas,
+    setSelectedObjects,
+  });
+
   const editor = useMemo(() => {
     if (canvas) {
       return buildEditor({
         canvas,
+        fillColor,
+        strokeColor,
+        strokeWidth,
+        setFillColor,
+        setStrokeWidth,
       });
     }
 

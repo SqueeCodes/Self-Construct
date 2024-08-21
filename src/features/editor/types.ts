@@ -52,17 +52,6 @@ export const TRIANGLE_OPTIONS = {
   angle: 0,
 };
 
-export const INVERSE_TRIANGLE_OPTIONS = {
-  left: 100,
-  right: 100,
-  fill: FILL_COLOR,
-  stroke: STROKE_COLOR,
-  strokeWidth: STROKE_WIDTH,
-  width: 400,
-  height: 400,
-  angle: 0,
-};
-
 export const DIAMOND_OPTIONS = {
   left: 100,
   right: 100,
