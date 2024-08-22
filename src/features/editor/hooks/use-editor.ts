@@ -13,6 +13,7 @@ import {
   STROKE_WIDTH
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
+import { isTextType } from "./util";
 
 
 const buildEditor = ({
@@ -48,6 +49,11 @@ const buildEditor = ({
     changeStrokeColor: (value: string) => {
       setFillColor(value);
       canvas.getActiveObjects().forEach((object) => {
+        // text types dont have strokes
+        if (isTextType(object.type)) {
+          object.set({ fill: value});
+          return;
+        }
         object.set({ stroke: value });
       });
     },
@@ -133,6 +139,9 @@ const buildEditor = ({
 
       addToCanvas(object);
     },
+    fillColor,
+    strokeColor,
+    strokeWidth,
 
 
   };
