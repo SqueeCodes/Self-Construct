@@ -17,6 +17,12 @@ import { useCanvasEvents } from "./use-canvas-events";
 
 const buildEditor = ({
   canvas,
+  fillColor,
+  setFillColor,
+  strokeColor,
+  setStrokeColor,
+  strokeWidth,
+  setStrokeWidth,
 }: BuildEditorProps): Editor => {
   const getWorkspace = () => {
     return canvas.getObjects().find((object) => object.name === "clip");
@@ -39,6 +45,24 @@ const buildEditor = ({
   };
 
   return {
+    changeStrokeColor: (value: string) => {
+      setFillColor(value);
+      canvas.getActiveObjects().forEach((object) => {
+        object.set({ stroke: value });
+      });
+    },
+    changeStrokeWidth: (value: number) => {
+      setStrokeWidth(value);
+      canvas.getActiveObjects().forEach((object) => {
+        object.set({ strokeWidth: value });
+      });
+    },
+    changeFillColor: (value: string) => {
+      setFillColor(value);
+      canvas.getActiveObjects().forEach((object) => {
+        object.set({ fill: value });
+      });
+    },
     addCircle: () => {
       const object = new fabric.Circle({
         ...CIRCLE_OPTIONS,
@@ -75,13 +99,13 @@ const buildEditor = ({
 
     addInverseTriangle: () => {
       const HEIGHT = TRIANGLE_OPTIONS.width;
-      const WIDTH =  TRIANGLE_OPTIONS.height;
+      const WIDTH = TRIANGLE_OPTIONS.height;
 
       const object = new fabric.Polygon(
         [
-          {x: 0, y: 0},
+          { x: 0, y: 0 },
           { x: WIDTH, y: 0 },
-          { x: WIDTH / 2, y: HEIGHT},
+          { x: WIDTH / 2, y: HEIGHT },
         ],
         {
           ...TRIANGLE_OPTIONS
@@ -93,14 +117,14 @@ const buildEditor = ({
 
     addDiamond: () => {
       const HEIGHT = DIAMOND_OPTIONS.height;
-      const WIDTH =  DIAMOND_OPTIONS.width;
+      const WIDTH = DIAMOND_OPTIONS.width;
 
       const object = new fabric.Polygon(
         [
-          { x: WIDTH / 2, y: 0},
-          { x: WIDTH, y: HEIGHT / 2},
-          { x: WIDTH / 2, y: HEIGHT},
-          { x: 0, y: HEIGHT / 2},
+          { x: WIDTH / 2, y: 0 },
+          { x: WIDTH, y: HEIGHT / 2 },
+          { x: WIDTH / 2, y: HEIGHT },
+          { x: 0, y: HEIGHT / 2 },
         ],
         {
           ...DIAMOND_OPTIONS
@@ -145,11 +169,16 @@ export const useEditor = () => {
         strokeWidth,
         setFillColor,
         setStrokeWidth,
+        setStrokeColor
       });
     }
 
     return undefined;
-  }, [canvas]);
+  }, [canvas,
+    fillColor,
+    strokeColor,
+    strokeWidth,
+  ]);
 
   const init = useCallback(({
     initialCanvas,
