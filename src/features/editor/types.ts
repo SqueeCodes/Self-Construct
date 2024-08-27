@@ -24,21 +24,21 @@ export const colors = [
 ];
 
 export type ActiveTool =
-"select"
-"shapes"
-"fill"
-"text"
-"images"
-"draw"
-"stroke-color"
-"stroke-width"
-"font"
-"opacity"
-"filter"
-"settings"
-"ai"
-"remove-bg"
-"templates";
+  | "select"
+  | "shapes"
+  | "text"
+  | "images"
+  | "draw"
+  | "fill"
+  | "stroke-color"
+  | "stroke-width"
+  | "font"
+  | "opacity"
+  | "filter"
+  | "settings"
+  | "ai"
+  | "remove-bg"
+  | "templates";
 
 export const FILL_COLOR = "rgba(0,0,0,1)";
 export const STROKE_COLOR = "rgba(0,0,0,1)";

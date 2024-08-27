@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { ActiveTool, Editor } from "../types";
 import { Hint } from "./hint";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "../../../lib/utils";
+import { Button } from "../../../components/ui/button";
+
 
 interface ToolbarProps {
   editor: Editor | undefined;

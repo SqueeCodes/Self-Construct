@@ -74,7 +74,6 @@ const buildEditor = ({
         object.set({ fill: value });
       });
       canvas.renderAll();
-
     },
     addCircle: () => {
       const object = new fabric.Circle({

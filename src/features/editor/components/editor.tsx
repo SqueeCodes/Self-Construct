@@ -3,11 +3,11 @@ import { fabric } from "fabric";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { ActiveTool } from "../types";
-import { useEditor } from "../hooks/use-editor"; 
+import { useEditor } from "../hooks/use-editor";
 import { Navbar } from "./navbar";
-import { Sidebar } from "./sidebar"; 
-import { Toolbar } from "./toolbar"; 
-import { Footer } from "./footer"; 
+import { Sidebar } from "./sidebar";
+import { Toolbar } from "./toolbar";
+import { Footer } from "./footer";
 import { ShapeSidebar } from "./shape-sidebar";
 import { FillColorSidebar } from "./fill-color-sidebar";
 
@@ -68,10 +68,10 @@ export const Editor = () => {
           onChangeActiveTool={onChangeActiveTool}
         />
 
-        <FillColorSidebar 
-                  editor={editor}
-                  activeTool={activeTool}
-                  onChangeActiveTool={onChangeActiveTool}
+        <FillColorSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
         />
 
         <main className="bg-muted flex-1 overflow-auto relative flex flex-col">
