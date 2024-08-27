@@ -13,7 +13,7 @@ import {
   STROKE_WIDTH
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
-import { isTextType } from "./util";
+import { isTextType } from "../utils";
 
 
 const buildEditor = ({
@@ -69,7 +69,7 @@ const buildEditor = ({
 
     },
     changeFillColor: (value: string) => {
-      setFillColor(value);
+      setFillColor(value), console.log("color changed");
       canvas.getActiveObjects().forEach((object) => {
         object.set({ fill: value });
       });
@@ -168,9 +168,6 @@ const buildEditor = ({
     strokeColor,
     strokeWidth,
     selectedObjects,
-
-
-
   };
 };
 

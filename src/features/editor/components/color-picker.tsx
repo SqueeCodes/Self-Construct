@@ -1,7 +1,7 @@
 import { ChromePicker, CirclePicker } from "react-color";
 
 import { colors } from "../types";
-import { rgbaObjectToString } from "../hooks/util";
+import { rgbaObjectToString } from "../utils";
 
 interface ColorPickerProps {
   value: string;

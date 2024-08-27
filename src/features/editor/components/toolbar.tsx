@@ -38,7 +38,7 @@ export const Toolbar = ({
             >
               <div
                 className="rounded-sm size-4 border"
-                style={{ backgroundColor: fillColor }}
+                style={{ backgroundColor: fillColor,  }}
               />
             </Button>
         </Hint>

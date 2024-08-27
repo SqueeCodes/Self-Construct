@@ -12,12 +12,12 @@ import { ShapeSidebar } from "./shape-sidebar";
 import { FillColorSidebar } from "./fill-color-sidebar";
 
 export const Editor = () => {
-  const [activeTool, setActiveToool] = useState<ActiveTool>("select");
+  const [activeTool, setActiveTool] = useState<ActiveTool>("select");
 
   const onChangeActiveTool = useCallback(
     (tool: ActiveTool) => {
       if (tool === activeTool) {
-        return setActiveToool("select");
+        return setActiveTool("select");
       }
 
       if (tool === "draw") {
@@ -27,7 +27,7 @@ export const Editor = () => {
         //
       }
 
-      setActiveToool(tool);
+      setActiveTool(tool);
     },
     [activeTool]
   );
@@ -72,6 +72,7 @@ export const Editor = () => {
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
+          
         />
 
         <main className="bg-muted flex-1 overflow-auto relative flex flex-col">

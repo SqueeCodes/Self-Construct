@@ -32,7 +32,7 @@ export const FillColorSidebar = ({
       className={cn(
         "bg-white relative border-r z-[40] w-[360px] h-full flex flex-col",
         // @ts-ignore
-        activeTool === "fill" ? "visible" : "hidden"
+        activeTool === "fill" ? "visible" : "hidden",
       )}
     >
       <ToolSidebarHeader

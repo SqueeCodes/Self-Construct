@@ -40,7 +40,8 @@ export type ActiveTool =
   | "remove-bg"
   | "templates";
 
-export const FILL_COLOR = "rgba(0,0,0,1)";
+export const FILL_COLOR = "rgba(0,0,0,1)"
+console.log("FILL_COLOR");
 export const STROKE_COLOR = "rgba(0,0,0,1)";
 export const STROKE_WIDTH = 2;
 
