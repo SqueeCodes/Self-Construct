@@ -3,11 +3,11 @@ import { fabric } from "fabric";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { ActiveTool } from "../types";
-import { useEditor } from "@/features/editor/hooks/use-editor";
-import { Navbar } from "@/features/editor/components/navbar";
-import { Sidebar } from "@/features/editor/components/sidebar";
-import { Toolbar } from "@/features/editor/components/toolbar";
-import { Footer } from "@/features/editor/components/footer";
+import { useEditor } from "../hooks/use-editor"; 
+import { Navbar } from "./navbar";
+import { Sidebar } from "./sidebar"; 
+import { Toolbar } from "./toolbar"; 
+import { Footer } from "./footer"; 
 import { ShapeSidebar } from "./shape-sidebar";
 import { FillColorSidebar } from "./fill-color-sidebar";
 

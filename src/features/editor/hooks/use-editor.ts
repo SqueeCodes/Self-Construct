@@ -23,6 +23,7 @@ const buildEditor = ({
   strokeColor,
   setStrokeColor,
   strokeWidth,
+  setStrokeWidth,
   selectedObjects,
 }: BuildEditorProps): Editor => {
   const getWorkspace = () => {
@@ -47,7 +48,7 @@ const buildEditor = ({
 
   return {
     changeStrokeColor: (value: string) => {
-      setFillColor(value);
+      setStrokeColor(value);
       canvas.getActiveObjects().forEach((object) => {
         // text types dont have strokes
         if (isTextType(object.type)) {
