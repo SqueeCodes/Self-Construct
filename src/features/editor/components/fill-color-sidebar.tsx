@@ -36,7 +36,7 @@ export const FillColorSidebar = ({
       )}
     >
       <ToolSidebarHeader
-        title="Fill coolor"
+        title="Fill color"
         description="Add fill color to your element"
       />
       <ScrollArea>
