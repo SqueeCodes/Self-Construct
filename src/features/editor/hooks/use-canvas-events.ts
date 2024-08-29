@@ -4,10 +4,12 @@ import { useEffect } from "react";
 interface useCanvasEventsProps {
   canvas: fabric.Canvas | null;
   setSelectedObjects: (objects: fabric.Object[]) => void;
+  clearSelectionCallback?: () => void;
 }
 
 export const useCanvasEvents = ({
   canvas,
+  clearSelectionCallback,
   setSelectedObjects
 }: useCanvasEventsProps) => {
   useEffect(() => {
@@ -22,7 +24,8 @@ export const useCanvasEvents = ({
       });
       canvas.on("selection:cleared", () => {
         console.log("selection:cleared");
-        setSelectedObjects([])
+        setSelectedObjects([]);
+        clearSelectionCallback?.();
       });
     }
 
@@ -34,6 +37,7 @@ export const useCanvasEvents = ({
       }
     };
   }, [canvas,
+    clearSelectionCallback,
     setSelectedObjects // <- not needed
 
   ]);

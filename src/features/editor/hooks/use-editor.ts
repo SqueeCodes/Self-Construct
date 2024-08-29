@@ -10,7 +10,8 @@ import {
   DIAMOND_OPTIONS,
   FILL_COLOR,
   STROKE_COLOR,
-  STROKE_WIDTH
+  STROKE_WIDTH,
+  EditorHookProps
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
 import { isTextType } from "../utils";
@@ -138,7 +139,6 @@ const buildEditor = ({
           strokeWidth: strokeWidth,
         }
       );
-
       addToCanvas(object);
     },
 
@@ -160,11 +160,20 @@ const buildEditor = ({
           strokeWidth: strokeWidth,
         }
       );
-
       addToCanvas(object);
     },
     canvas,
-    fillColor,
+    getActiveFillColor: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return fillColor;
+      }
+      const value = selectedObject.get("fill") || fillColor;
+        // Currenty, gradients & patterns are not supported. only strings.
+      return value as string;
+
+    },
     strokeColor,
     strokeWidth,
     selectedObjects,
@@ -172,7 +181,9 @@ const buildEditor = ({
 };
 
 
-export const useEditor = () => {
+export const useEditor = ({
+  clearSelectionCallback
+}: EditorHookProps) => {
   const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [selectedObjects, setSelectedObjects] = useState<fabric.Object[]>([]);
@@ -191,6 +202,7 @@ export const useEditor = () => {
   useCanvasEvents({
     canvas,
     setSelectedObjects,
+    clearSelectionCallback,
   });
 
   const editor = useMemo(() => {
