@@ -13,7 +13,8 @@ import {
   STROKE_WIDTH,
   EditorHookProps,
   STROKE_DASH_ARRAY,
-  TEXT_OPTIONS
+  TEXT_OPTIONS,
+  FONT_FAMILY,
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
 import { isTextType } from "../utils";
@@ -22,6 +23,8 @@ import { isTextType } from "../utils";
 const buildEditor = ({
   canvas,
   fillColor,
+  fontFamily,
+  setFontFamily,
   setFillColor,
   strokeColor,
   setStrokeColor,
@@ -119,6 +122,31 @@ const buildEditor = ({
         object.set({ strokeDashArray: value });
       });
       canvas.renderAll();
+    },
+
+    changeFontFamily: (value: string) => {
+      setFontFamily(value);
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+          // @ts-ignore
+          object.set({ fontFamily: value });
+        }
+      });
+      canvas.renderAll();
+    },
+
+    getActiveFontFamily: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return fontFamily;
+      }
+
+      // @ts-ignore
+      // Faulty TS library, fontFamily exists.
+      const value = selectedObject.get("fontFamily") || fontFamily;
+
+      return value;
     },
 
     changeFillColor: (value: string) => {
@@ -274,6 +302,7 @@ export const useEditor = ({
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [selectedObjects, setSelectedObjects] = useState<fabric.Object[]>([]);
 
+  const [fontFamily, setFontFamily] = useState(FONT_FAMILY);
   const [fillColor, setFillColor] = useState(FILL_COLOR);
   const [strokeColor, setStrokeColor] = useState(STROKE_COLOR);
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
@@ -305,6 +334,8 @@ export const useEditor = ({
         setStrokeWidth,
         setStrokeColor,
         selectedObjects,
+        fontFamily,
+        setFontFamily,
       });
     }
 
@@ -314,7 +345,8 @@ export const useEditor = ({
     strokeWidth,
     strokeColor,
     selectedObjects,
-    strokeDashArray,   //<- very import to always add after adding to your buildEditor
+    strokeDashArray,
+    fontFamily,   //<- very import to always add after adding to your buildEditor
   ]);
 
   const init = useCallback(({
