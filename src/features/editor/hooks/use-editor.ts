@@ -51,6 +51,37 @@ const buildEditor = ({
   };
 
   return {
+    getActiveOpacity: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return 1;
+      }
+      const value = selectedObject.get("opacity") || 1;
+      return value;
+    },
+    changeOpacity: (value: number) => {
+      canvas.getActiveObjects().forEach((object) => {
+        object.set({ opacity: value });
+      });
+      canvas.renderAll();
+    },
+    bringForward: () => {
+      canvas.getActiveObjects().forEach((object) => {
+        canvas.bringForward(object);
+      });
+      canvas.renderAll();
+      const workspace = getWorkspace();
+      workspace?.sendToBack();
+    },
+    sendBackwards: () => {
+      canvas.getActiveObjects().forEach((object) => {
+        canvas.sendBackwards(object);
+      });
+      canvas.renderAll();
+      const workspace = getWorkspace();
+      workspace?.sendToBack();
+    },
     changeStrokeColor: (value: string) => {
       setStrokeColor(value);
       canvas.getActiveObjects().forEach((object) => {
