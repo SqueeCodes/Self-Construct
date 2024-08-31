@@ -7,6 +7,7 @@ import { Hint } from "./hint";
 import { cn } from "../../../lib/utils";
 import { Button } from "../../../components/ui/button";
 import { BsBorderWidth } from "react-icons/bs";
+import { isTextType } from "../utils";
 
 interface ToolbarProps {
   editor: Editor | undefined;
@@ -21,6 +22,10 @@ export const Toolbar = ({
 }: ToolbarProps) => {
   const fillColor = editor?.getActiveFillColor();
   const strokeColor = editor?.getActiveStrokeColor();
+
+  const selectedObjectType = editor?.selectedObjects[0]?.type;
+
+  const isText = isTextType(selectedObjectType);
 
   if (editor?.selectedObjects.length === 0) {
     return (
@@ -45,6 +50,7 @@ export const Toolbar = ({
           </Button>
         </Hint>
       </div>
+      {!isText && (
       <div className="flex items-center h-full justify-center">
         <Hint label="Stroke color" side="bottom" sideOffset={5}>
           <Button
@@ -60,6 +66,8 @@ export const Toolbar = ({
           </Button>
         </Hint>
       </div>
+      )}
+       {!isText && (
       <div className="flex items-center h-full justify-center">
         <Hint label="Stroke width" side="bottom" sideOffset={5}>
           <Button
@@ -72,6 +80,7 @@ export const Toolbar = ({
           </Button>
         </Hint>
       </div>
+      )}
       <div className="flex items-center h-full justify-center">
         <Hint label="Bring forward" side="bottom" sideOffset={5}>
           <Button
