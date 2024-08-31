@@ -33,7 +33,7 @@ export const TextSidebar = ({
       )}
     >
       <ToolSidebarHeader
-        title="Text"
+        title="Text Options"
         description="Add text to your canvas"
       />
       <ScrollArea>
@@ -54,7 +54,7 @@ export const TextSidebar = ({
             })}
           >
             <span className="text-3xl font-bold">
-              Add a heading
+             Heading
             </span>
           </Button>
           <Button
@@ -67,7 +67,7 @@ export const TextSidebar = ({
             })}
           >
             <span className="text-xl font-semibold">
-              Add a subheading
+              Subheading
             </span>
           </Button>
           <Button
@@ -79,6 +79,20 @@ export const TextSidebar = ({
             })}
           >
             Paragraph
+          </Button>
+          <Button
+            className="w-full h-16 font-extrabold text-xl text-red-600 text-opacity-35
+            rotate-35"
+            variant="secondary"
+            size="lg"
+            onClick={() => editor?.addText("VOID", {
+              fontSize: 64,
+              opacity: 0.35,
+              fontWeight: 800,
+              angle: -25,
+            })}
+          >
+            STAMP
           </Button>
         </div>
       </ScrollArea>

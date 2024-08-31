@@ -1,4 +1,5 @@
 import { fabric } from "fabric"
+import { ITextboxOptions } from "fabric/fabric-impl";
 import * as material from "material-colors";
 
 export const selectionDependentTools = [
@@ -93,10 +94,10 @@ export const TRIANGLE_OPTIONS = {
 export const TEXT_OPTIONS = {
   type: "textbox",
   left: 100,
-  right: 100,
+  top: 100,
   fill: FILL_COLOR,
-  fontSize: "FONT_SIZE",
-  fontFamily: "FONT_FAMILY",
+  fontSize: FONT_SIZE,
+  fontFamily: FONT_FAMILY,
 };
 
 
@@ -129,7 +130,7 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
-  addText: () => void;
+  addText: (value: string, options?: ITextboxOptions) => void;
   getActiveOpacity: () => number;
   changeOpacity: (value: number) => void;
   bringForward: () => void;
