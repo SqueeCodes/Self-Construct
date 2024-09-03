@@ -98,7 +98,7 @@ export const Navbar = ({ activeTool, onChangeActiveTool }: NavbarProps) => {
           <div className="text-xs text-muted-foreground">Saved</div>
         </div>
         <div className="ml-auto flex items-center gap-x-4">
-          <DropdownMenu modall={false}>
+          <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
               <Button size="sm" variant="ghost">
                 Export
