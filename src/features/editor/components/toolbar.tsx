@@ -9,6 +9,10 @@ import {
   AlignLeft,
   AlignCenter,
   AlignRight,
+  Trash,
+  Trash2,
+  Trash2Icon,
+  TrashIcon,
 } from "lucide-react";
 import { RxTransparencyGrid } from "react-icons/rx";
 
@@ -351,6 +355,17 @@ export const Toolbar = ({
             variant="ghost"
           >
             <RxTransparencyGrid className="size-4 " />
+          </Button>
+        </Hint>
+      </div>
+      <div className="flex items-center h-full justify-center">
+        <Hint label="Delete" side="bottom" sideOffset={5}>
+          <Button
+            onClick={() => editor?.delete()}
+            size="icon"
+            variant="ghost"
+          >
+            <Trash2 className="size-4 " />
           </Button>
         </Hint>
       </div>

@@ -61,6 +61,12 @@ const buildEditor = ({
   };
 
   return {
+    delete: () => {
+      canvas.getActiveObjects().forEach((object) => canvas.remove(object));
+      canvas.discardActiveObject();
+      canvas.renderAll();
+    },
+
     addText: (value, options) => {
       const object = new fabric.Textbox(value, {
         ...TEXT_OPTIONS,
@@ -206,7 +212,7 @@ const buildEditor = ({
       }
       // @ts-ignore
       // Faulty TS library, fontStyle exists.
-      const value = selectedObject.get("fontStyle") || FONT_STYLE;
+      const value = selectedObject.get("fontStyle") || "normal";
 
       return value;
     },
