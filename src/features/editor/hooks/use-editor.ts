@@ -15,6 +15,7 @@ import {
   STROKE_DASH_ARRAY,
   TEXT_OPTIONS,
   FONT_FAMILY,
+  FONT_WEIGHT,
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
 import { isTextType } from "../utils";
@@ -38,6 +39,7 @@ const buildEditor = ({
     return canvas.getObjects().find((object) => object.name === "clip");
   };
 
+
   const center = (object: fabric.Object) => {
     const workspace = getWorkspace();
     const center = workspace?.getCenterPoint();
@@ -47,6 +49,7 @@ const buildEditor = ({
     // @ts-ignore
     canvas._centerObject(object, center);
   };
+
 
   const addToCanvas = (object: fabric.Object) => {
     center(object);
@@ -64,6 +67,8 @@ const buildEditor = ({
 
       addToCanvas(object);
     },
+
+
     getActiveOpacity: () => {
       const selectedObject = selectedObjects[0];
 
@@ -73,12 +78,107 @@ const buildEditor = ({
       const value = selectedObject.get("opacity") || 1;
       return value;
     },
+    
+
+    changeFontUnderline: (value: boolean) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+             // @ts-ignore
+            // Faulty TS library, underline exists.
+          object.set({ underline: value });
+        }
+      });
+      canvas.renderAll();
+    },
+
+
+    getActiveFontUnderline: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return false;
+      }
+      // @ts-ignore
+      // Faulty TS library, fontStyle exists.
+      const value = selectedObject.get("underline") || false;
+
+      return value;
+    },
+
+
+    changeFontLinethrough: (value: boolean) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+             // @ts-ignore
+            // Faulty TS library, linethrough exists.
+          object.set({ linethrough: value });
+        }
+      });
+      canvas.renderAll();
+    },
+
+
+    getActiveFontLinethrough: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return false;
+      }
+      // @ts-ignore
+      // Faulty TS library, fontStyle exists.
+      const value = selectedObject.get("linethrough") || false;
+
+      return value;
+    },
+
+
+
+    changeFontStyle: (value: string) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+             // @ts-ignore
+            // Faulty TS library, fontStyle exists.
+          object.set({ fontStyle: value });
+        }
+      });
+      canvas.renderAll();
+    },
+
+
+    getActiveFontStyle: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return "normal";
+      }
+      // @ts-ignore
+      // Faulty TS library, fontStyle exists.
+      const value = selectedObject.get("fontStyle") || FONT_STYLE;
+
+      return value;
+    },
+
+
+    changeFontWeight: (value: number) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+             // @ts-ignore
+            // Faulty TS library, fontWeight exists.
+          object.set({ fontWeight: value });
+        }
+      });
+      canvas.renderAll();
+    },
+
+
     changeOpacity: (value: number) => {
       canvas.getActiveObjects().forEach((object) => {
         object.set({ opacity: value });
       });
       canvas.renderAll();
     },
+
+
     bringForward: () => {
       canvas.getActiveObjects().forEach((object) => {
         canvas.bringForward(object);
@@ -87,6 +187,8 @@ const buildEditor = ({
       const workspace = getWorkspace();
       workspace?.sendToBack();
     },
+
+
     sendBackwards: () => {
       canvas.getActiveObjects().forEach((object) => {
         canvas.sendBackwards(object);
@@ -95,6 +197,8 @@ const buildEditor = ({
       const workspace = getWorkspace();
       workspace?.sendToBack();
     },
+
+
     changeStrokeColor: (value: string) => {
       setStrokeColor(value);
       canvas.getActiveObjects().forEach((object) => {
@@ -105,9 +209,10 @@ const buildEditor = ({
         }
         object.set({ stroke: value });
       });
-
       canvas.renderAll();
     },
+
+
     changeStrokeWidth: (value: number) => {
       setStrokeWidth(value);
       canvas.getActiveObjects().forEach((object) => {
@@ -116,6 +221,7 @@ const buildEditor = ({
       canvas.renderAll();
     },
 
+
     changeStrokeDashArray: (value: number[]) => {
       setStrokeDashArray(value);
       canvas.getActiveObjects().forEach((object) => {
@@ -123,6 +229,7 @@ const buildEditor = ({
       });
       canvas.renderAll();
     },
+
 
     changeFontFamily: (value: string) => {
       setFontFamily(value);
@@ -135,19 +242,32 @@ const buildEditor = ({
       canvas.renderAll();
     },
 
-    getActiveFontFamily: () => {
+
+    getActiveFontWeight: () => {
       const selectedObject = selectedObjects[0];
 
       if (!selectedObject) {
-        return fontFamily;
+        return FONT_WEIGHT;
       }
-
       // @ts-ignore
-      // Faulty TS library, fontFamily exists.
-      const value = selectedObject.get("fontFamily") || fontFamily;
+      // Faulty TS library, fontWeight exists.
+      const value = selectedObject.get("fontWeight") || FONT_WEIGHT;
 
       return value;
     },
+
+
+    getActiveFontFamily: () => {
+      const selectedObject = selectedObjects[0];
+      if (!selectedObject) {
+        return fontFamily;
+      }
+      // @ts-ignore
+      // Faulty TS library, fontFamily exists.
+      const value = selectedObject.get("fontFamily") || fontFamily;
+      return value;
+    },
+
 
     changeFillColor: (value: string) => {
       setFillColor(value), console.log("color changed");
@@ -156,6 +276,8 @@ const buildEditor = ({
       });
       canvas.renderAll();
     },
+
+
     addCircle: () => {
       const object = new fabric.Circle({
         ...CIRCLE_OPTIONS,
@@ -165,8 +287,8 @@ const buildEditor = ({
         strokeDashArray: strokeDashArray,
       });
       addToCanvas(object);
-
     },
+
 
     addSoftRectangle: () => {
       const object = new fabric.Rect({
@@ -178,9 +300,9 @@ const buildEditor = ({
         rx: 50,
         ry: 50,
       });
-
       addToCanvas(object);
     },
+
 
     addRectangle: () => {
       const object = new fabric.Rect({
@@ -190,9 +312,9 @@ const buildEditor = ({
         strokeWidth: strokeWidth,
         strokeDashArray: strokeDashArray,
       });
-
       addToCanvas(object);
     },
+
 
     addTriangle: () => {
       const object = new fabric.Triangle({
@@ -202,9 +324,9 @@ const buildEditor = ({
         strokeWidth: strokeWidth,
         strokeDashArray: strokeDashArray,
       });
-
       addToCanvas(object);
     },
+
 
     addInverseTriangle: () => {
       const HEIGHT = TRIANGLE_OPTIONS.width;
@@ -248,6 +370,8 @@ const buildEditor = ({
       );
       addToCanvas(object);
     },
+
+
     canvas,
 
     getActiveFillColor: () => {
