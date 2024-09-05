@@ -1,4 +1,5 @@
 import { fabric } from "fabric";
+import { ITextboxOptions } from "fabric/fabric-impl";
 import { useCallback, useState, useMemo } from "react";
 import { useAutoResize } from "./use-auto-resize";
 import {
@@ -19,6 +20,7 @@ import {
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
 import { isTextType } from "../utils";
+
 
 
 const buildEditor = ({
@@ -76,6 +78,32 @@ const buildEditor = ({
         return 1;
       }
       const value = selectedObject.get("opacity") || 1;
+      return value;
+    },
+
+
+    changeTextAlign: (value: string) => {
+      canvas.getActiveObjects().forEach((object) => {
+        if (isTextType(object.type)) {
+             // @ts-ignore
+            // Faulty TS library, textAlign exists.
+          object.set({ textAlign: value });
+        }
+      });
+      canvas.renderAll();
+    },
+
+
+    getActiveTextAlign: () => {
+      const selectedObject = selectedObjects[0];
+
+      if (!selectedObject) {
+        return false;
+      }
+      // @ts-ignore
+      // Faulty TS library, textAlign exists.
+      const value = selectedObject.get("textAlign") || "left";
+
       return value;
     },
     
