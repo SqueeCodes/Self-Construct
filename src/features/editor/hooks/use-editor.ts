@@ -61,6 +61,23 @@ const buildEditor = ({
   };
 
   return {
+    addImage: (value: string) => {
+      fabric.Image.fromURL(
+        value,
+        (image) => {
+          const workspace = getWorkspace();
+          image.scaleToWidth(workspace?.width || 0);
+          image.scaleToHeight(workspace?.height || 0);
+
+          addToCanvas(image);
+        },
+        {
+          crossOrigin: "anonymous",
+        },
+      );
+    },
+
+    
     delete: () => {
       canvas.getActiveObjects().forEach((object) => canvas.remove(object));
       canvas.discardActiveObject();
@@ -92,8 +109,8 @@ const buildEditor = ({
     changeFontSize: (value: number) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {
-             // @ts-ignore
-            // Faulty TS library, fontSize exists.
+          // @ts-ignore
+          // Faulty TS library, fontSize exists.
           object.set({ fontSize: value });
         }
       });
@@ -116,8 +133,8 @@ const buildEditor = ({
     changeTextAlign: (value: string) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {
-             // @ts-ignore
-            // Faulty TS library, textAlign exists.
+          // @ts-ignore
+          // Faulty TS library, textAlign exists.
           object.set({ textAlign: value });
         }
       });
@@ -137,13 +154,13 @@ const buildEditor = ({
 
       return value;
     },
-    
+
 
     changeFontUnderline: (value: boolean) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {
-             // @ts-ignore
-            // Faulty TS library, underline exists.
+          // @ts-ignore
+          // Faulty TS library, underline exists.
           object.set({ underline: value });
         }
       });
@@ -168,8 +185,8 @@ const buildEditor = ({
     changeFontLinethrough: (value: boolean) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {
-             // @ts-ignore
-            // Faulty TS library, linethrough exists.
+          // @ts-ignore
+          // Faulty TS library, linethrough exists.
           object.set({ linethrough: value });
         }
       });
@@ -195,8 +212,8 @@ const buildEditor = ({
     changeFontStyle: (value: string) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {
-             // @ts-ignore
-            // Faulty TS library, fontStyle exists.
+          // @ts-ignore
+          // Faulty TS library, fontStyle exists.
           object.set({ fontStyle: value });
         }
       });
@@ -221,8 +238,8 @@ const buildEditor = ({
     changeFontWeight: (value: number) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {
-             // @ts-ignore
-            // Faulty TS library, fontWeight exists.
+          // @ts-ignore
+          // Faulty TS library, fontWeight exists.
           object.set({ fontWeight: value });
         }
       });
