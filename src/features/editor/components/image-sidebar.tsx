@@ -9,6 +9,7 @@ import { useGetImages } from "../../images/api/use-get-images";
 
 import { cn } from "../../../lib/utils";
 import { ScrollArea } from "../../../components/ui/scroll-area";
+import { UploadButton } from "../../../lib/uploadthing";
 
 interface ImageSidebarProps {
   editor: Editor | undefined;
@@ -38,6 +39,21 @@ export const ImageSidebar = ({
         title="Images"
         description="Add images to your canvas"
       />
+      <div className="p-4 boreder-b">
+        <UploadButton
+          appearance={{
+            button: "w-full text-sm font-medium",
+            allowedContent: "hidden",
+          }}
+          content={{
+            button: "Upload Image",
+          }}
+          endpoint="imageUploader"
+          onClientUploadComplete={(res) => {
+            editor?.addImage(res[0].url);
+          }}
+        />
+      </div>
       {isLoading && (
         <div className="flex items-center justify-center flex-1">
           <Loader2 className="size-6 text-muted-foreground animate-spin" />
@@ -58,7 +74,7 @@ export const ImageSidebar = ({
               data.map((image) => {
                 return (
                   <button
-                  onClick={() => editor?.addImage(image.urls.regular)}
+                    onClick={() => editor?.addImage(image.urls.regular)}
                     key={image.id}
                     className="relative w-full h-[100px] group hover:opacity-75 transition bg-muted rounded-sm overflow-hidden border"
                   >
