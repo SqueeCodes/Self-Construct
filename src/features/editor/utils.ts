@@ -39,7 +39,6 @@ export const createFilter = (value: string) => {
       break;
 
     case "contrast":
-      // @ts-ignore
       effect = new fabric.Image.filters.Contrast({ contrast: 0.3 });
       break;
 
@@ -51,6 +50,10 @@ export const createFilter = (value: string) => {
     case "brownie":
       // @ts-ignore
       effect = new fabric.Image.filters.Brownie();
+      break;
+
+    case "greyscale":
+      effect = new fabric.Image.filters.Grayscale();
       break;
 
     case "vintage":
@@ -126,9 +129,15 @@ export const createFilter = (value: string) => {
       })
       break;
 
-    case "Resize":
+    case "resize":
       // @ts-ignore
       effect = new fabric.Image.filters.Resize();
+      break;
+
+    case "saturation":
+      effect = new fabric.Image.filters.Saturation({
+        saturation: 0.7,
+      });
       break;
 
     case "gamma":
@@ -137,6 +146,8 @@ export const createFilter = (value: string) => {
         gamma: [1, 0.5, 2.1]
       });
       break;
+
+
     default:
       effect = null;
       return;
