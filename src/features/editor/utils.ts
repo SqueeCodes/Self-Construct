@@ -1,4 +1,7 @@
+import { fabric } from "fabric";
+
 import { RGBColor } from "react-color";
+
 
 
 export function isTextType(type: string | undefined) {
@@ -13,4 +16,131 @@ export function rgbaObjectToString(rgba: RGBColor | "transparent") {
   const alpha = rgba.a === undefined ? 1 : rgba.a;
 
   return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${alpha})`;
+};
+
+
+export const createFilter = (value: string) => {
+  let effect;
+
+  switch (value) {
+    case "polaroid":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Polaroid();
+      break;
+
+    case "sepia":
+      effect = new fabric.Image.filters.Sepia();
+      break;
+
+
+    case "kodachrome":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Kodachrome();
+      break;
+
+    case "contrast":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Contrast({ contrast: 0.3 });
+      break;
+
+    case "brightness":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Brightness({ brightness: 0.8 });
+      break;
+
+    case "brownie":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Brownie();
+      break;
+
+    case "vintage":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Vintage();
+      break;
+
+    case "technicolor":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Technicolor();
+      break;
+
+    case "pixelate":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Pixelate();
+      break;
+
+    case "invert":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Invert();
+      break;
+
+    case "blur":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Blur();
+      break;
+
+    case "sharpen":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Convolute({
+        matrix: [0, -1, 0, -1, 5, -1, 0, -1, 0],
+      });
+      break;
+
+    case "emboss":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Convolute({
+        matrix: [1, 1, 1, 1, 0.7, -1, -1, -1, -1],
+      });
+      break;
+
+    case "removecolor":
+      // @ts-ignore
+      effect = new fabric.Image.filters.RemoveColor({
+        threshold: 0.2,
+        distance: 0.5
+      });
+
+    case "blacknwhite":
+      // @ts-ignore
+      effect = new fabric.Image.filters.BlackWhite();
+      break;
+
+    case "vibrance":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Vibrance({
+        vibrance: 1,
+      });
+      break;
+
+    case "blendcolor":
+      // @ts-ignore
+      effect = new fabric.Image.filters.blendColor({
+        color: "#00ff00",
+        mode: "multiply",
+      });
+      break;
+
+    case "huerotate":
+      // @ts-ignore
+      effect = new fabric.Image.filters.HueRotation({
+        rotation: 0.5,
+      })
+      break;
+
+    case "Resize":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Resize();
+      break;
+
+    case "gamma":
+      // @ts-ignore
+      effect = new fabric.Image.filters.Gamma({
+        gamma: [1, 0.5, 2.1]
+      });
+      break;
+    default:
+      effect = null;
+      return;
+  };
+
+  return effect;
 };
