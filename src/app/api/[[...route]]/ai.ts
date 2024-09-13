@@ -14,15 +14,16 @@ const app = new Hono()
     ),
     async (c) => {
       const { prompt } = c.req.valid("json");
+      console.log({ prompt });
 
       const input = {
         cfg: 3.5,
         steps: 28,
-        prompt: "a photo of vibrant artistic graffiti on a wall saying \"SD3 medium\"",
+        prompt: prompt,
         aspect_ratio: "3:2",
         output_format: "webp",
         output_quality: 90,
-        negative_prompt: "prompt",
+        negative_prompt: "prmpt",
         prompt_strength: 0.85
       };
       
