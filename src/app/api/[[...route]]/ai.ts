@@ -15,20 +15,19 @@ const app = new Hono()
     async (c) => {
       const { prompt } = c.req.valid("json");
 
-      const output: unknown = await replicate.run(
-        "stability-ai/stable-diffusion:ac732df83cea7fff18b8472768c88ad041fa750ff7682a21affe81863cbe77e4",
-        {
-          input: {
-            width: 768,
-            height: 768,
-            prompt: prompt,
-            scheduler: "K_EULER",
-            num_outputs: 1,
-            guidance_scale: 7.5,
-            num_inference_steps: 50
-          }
-        }
-      );
+      const input = {
+        cfg: 3.5,
+        steps: 28,
+        prompt: "a photo of vibrant artistic graffiti on a wall saying \"SD3 medium\"",
+        aspect_ratio: "3:2",
+        output_format: "webp",
+        output_quality: 90,
+        negative_prompt: "prompt",
+        prompt_strength: 0.85
+      };
+      
+      const output = await replicate.run("stability-ai/stable-diffusion-3", { input });
+      console.log(output);
 
       const res = output as Array<string>
 
