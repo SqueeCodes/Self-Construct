@@ -21,6 +21,7 @@ import {
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
 import { createFilter, isTextType } from "../utils";
+import { useClipboard } from "./use-clipboard";
 
 
 
@@ -61,7 +62,7 @@ const buildEditor = ({
   };
 
   return {
-    
+
     changeImageFilter: (value: string) => {
       const objects = canvas.getActiveObjects();
       objects.forEach((object) => {
@@ -526,6 +527,8 @@ export const useEditor = ({
   const [strokeColor, setStrokeColor] = useState(STROKE_COLOR);
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
   const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
+
+  useClipboard({ canvas });
 
 
   useAutoResize({
