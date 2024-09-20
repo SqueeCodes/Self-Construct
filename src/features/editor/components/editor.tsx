@@ -23,23 +23,6 @@ import { RemoveBgSidebar } from "./remove-bg-sidebar";
 export const Editor = () => {
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
 
-  const onChangeActiveTool = useCallback(
-    (tool: ActiveTool) => {
-      if (tool === activeTool) {
-        return setActiveTool("select");
-      }
-
-      if (tool === "draw") {
-        //
-      }
-      if (activeTool === "draw") {
-        //
-      }
-
-      setActiveTool(tool);
-    },
-    [activeTool]
-  );
 
   const onClearSelection = useCallback(() => {
     if (selectionDependentTools.includes(activeTool)) {
@@ -50,6 +33,25 @@ export const Editor = () => {
   const { init, editor } = useEditor({
     clearSelectionCallback: onClearSelection,
   });
+
+  
+  const onChangeActiveTool = useCallback(
+    (tool: ActiveTool) => {
+      if (tool === activeTool) {
+        return setActiveTool("select");
+      }
+
+      if (tool === "draw") {
+        editor?.enableDrawingMode();
+      }
+      if (activeTool === "draw") {
+        editor?.disableDrawingMode();
+      }
+
+      setActiveTool(tool);
+    },
+    [activeTool, editor]
+  );
 
   const canvasRef = useRef(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -75,7 +77,6 @@ export const Editor = () => {
     <div className="h-full flex flex-col">
       <Navbar activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
       <div className="absolute h-[calc(100%-68px)] w-full top-[68px] flex">
-
         <Sidebar
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
@@ -128,7 +129,7 @@ export const Editor = () => {
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
         />
-        
+
         <FilterSidebar
           editor={editor}
           activeTool={activeTool}
@@ -146,7 +147,6 @@ export const Editor = () => {
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
         />
-
 
         <main className="bg-muted flex-1 overflow-auto relative flex flex-col">
           <Toolbar
