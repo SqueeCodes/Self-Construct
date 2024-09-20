@@ -19,6 +19,7 @@ import { ImageSidebar } from "./image-sidebar";
 import { FilterSidebar } from "./filter-sidebar";
 import { AiSidebar } from "./ai-sidebar";
 import { RemoveBgSidebar } from "./remove-bg-sidebar";
+import { DrawSidebar } from "./draw-sidebar";
 
 export const Editor = () => {
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
@@ -37,16 +38,18 @@ export const Editor = () => {
   
   const onChangeActiveTool = useCallback(
     (tool: ActiveTool) => {
+      if (tool === "draw") {
+        editor?.enableDrawingMode();
+      }
+
+      if (activeTool === "draw") {
+        editor?.disableDrawingMode();
+      }
+
       if (tool === activeTool) {
         return setActiveTool("select");
       }
 
-      if (tool === "draw") {
-        editor?.enableDrawingMode();
-      }
-      if (activeTool === "draw") {
-        editor?.disableDrawingMode();
-      }
 
       setActiveTool(tool);
     },
@@ -143,6 +146,12 @@ export const Editor = () => {
         />
 
         <RemoveBgSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+
+        <DrawSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}

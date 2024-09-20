@@ -71,7 +71,7 @@ const buildEditor = ({
       canvas.freeDrawingBrush.width = strokeWidth;
       canvas.freeDrawingBrush.color = strokeColor;
     },
-    
+
     disableDrawingMode: () => {
       canvas.isDrawingMode = false;
     },
@@ -322,6 +322,9 @@ const buildEditor = ({
         }
         object.set({ stroke: value });
       });
+
+      canvas.freeDrawingBrush.color = strokeColor;
+
       canvas.renderAll();
     },
 
@@ -331,6 +334,9 @@ const buildEditor = ({
       canvas.getActiveObjects().forEach((object) => {
         object.set({ strokeWidth: value });
       });
+
+      canvas.freeDrawingBrush.width = strokeWidth;
+
       canvas.renderAll();
     },
 
