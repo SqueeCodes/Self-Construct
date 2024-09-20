@@ -23,9 +23,8 @@ import { useCanvasEvents } from "./use-canvas-events";
 import { createFilter, isTextType } from "../utils";
 import { useClipboard } from "./use-clipboard";
 
-
-
 const buildEditor = ({
+  autoZoom,
   copy,
   paste,
   canvas,
@@ -64,6 +63,21 @@ const buildEditor = ({
   };
 
   return {
+    getWorkspace,
+    changeSize: (value: { width: number; height: number }) => {
+      const workspace = getWorkspace();
+
+      workspace?.set(value);
+      autoZoom();
+      //TODO: Save
+    },
+    changeBackground: (value: string) => {
+      const workspace = getWorkspace();
+      workspace?.set({ fill: value });
+      canvas.renderAll();
+      //TODO: Save
+    },
+
     enableDrawingMode: () => {
       canvas.discardActiveObject();
       canvas.renderAll();
@@ -71,7 +85,6 @@ const buildEditor = ({
       canvas.freeDrawingBrush.width = strokeWidth;
       canvas.freeDrawingBrush.color = strokeColor;
     },
-
     disableDrawingMode: () => {
       canvas.isDrawingMode = false;
     },
@@ -554,7 +567,7 @@ export const useEditor = ({
   const { copy, paste } = useClipboard({ canvas });
 
 
-  useAutoResize({
+  const { autoZoom } = useAutoResize({
     canvas,
     container,
   });
@@ -569,6 +582,7 @@ export const useEditor = ({
   const editor = useMemo(() => {
     if (canvas) {
       return buildEditor({
+        autoZoom,
         copy,
         paste,
         canvas,
@@ -588,6 +602,7 @@ export const useEditor = ({
 
     return undefined;
   }, [
+    autoZoom,
     copy,
     paste,
     canvas,

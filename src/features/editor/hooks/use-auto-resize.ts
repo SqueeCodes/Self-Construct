@@ -90,4 +90,6 @@ export const useAutoResize = ({
     container,
     autoZoom,
   ]);
+
+  return { autoZoom };
 };
