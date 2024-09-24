@@ -65,7 +65,7 @@ const buildEditor = ({
     };
   };
 
-  const savePNG = () => {
+  const savePng = () => {
     const options = generateSaveOptions();
 
     canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
@@ -74,7 +74,7 @@ const buildEditor = ({
     downloadFile(dataUrl, "png");
   }
 
-  const saveSVG = () => {
+  const saveSvg = () => {
     const options = generateSaveOptions();
 
     canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
@@ -98,7 +98,16 @@ const buildEditor = ({
    await transformText(dataUrl.objects);
    const fileString = `data:text/json;charset=utf-8,${encodeURIComponent(
     JSON.stringify(dataUrl, null, "\t"),
-   )}`
+   )}`;
+   downloadFile(fileString, "json");
+  };
+
+  const loadJson = (json:string) => {
+    const data = JSON.parse(json);
+
+    canvas.loadFromJSON(data, () => {
+      autoZoom();
+    });
   };
 
   const getWorkspace = () => {
@@ -124,6 +133,11 @@ const buildEditor = ({
   };
 
   return {
+    savePng,
+    saveJpg,
+    saveSvg,
+    saveJson,
+    loadJson,
     canUndo,
     canRedo,
     autoZoom,
@@ -194,7 +208,6 @@ const buildEditor = ({
 
     },
 
-
     addImage: (value: string) => {
       fabric.Image.fromURL(
         value,
@@ -210,7 +223,6 @@ const buildEditor = ({
         },
       );
     },
-
 
     delete: () => {
       canvas.getActiveObjects().forEach((object) => canvas.remove(object));
@@ -228,7 +240,6 @@ const buildEditor = ({
       addToCanvas(object);
     },
 
-
     getActiveOpacity: () => {
       const selectedObject = selectedObjects[0];
 
@@ -238,7 +249,6 @@ const buildEditor = ({
       const value = selectedObject.get("opacity") || 1;
       return value;
     },
-
 
     changeFontSize: (value: number) => {
       canvas.getActiveObjects().forEach((object) => {
@@ -250,7 +260,6 @@ const buildEditor = ({
       });
       canvas.renderAll();
     },
-
 
     getActiveFontSize: () => {
       const selectedObject = selectedObjects[0];
@@ -275,7 +284,6 @@ const buildEditor = ({
       canvas.renderAll();
     },
 
-
     getActiveTextAlign: () => {
       const selectedObject = selectedObjects[0];
 
@@ -289,7 +297,6 @@ const buildEditor = ({
       return value;
     },
 
-
     changeFontUnderline: (value: boolean) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {
@@ -300,7 +307,6 @@ const buildEditor = ({
       });
       canvas.renderAll();
     },
-
 
     getActiveFontUnderline: () => {
       const selectedObject = selectedObjects[0];
@@ -315,7 +321,6 @@ const buildEditor = ({
       return value;
     },
 
-
     changeFontLinethrough: (value: boolean) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {
@@ -326,7 +331,6 @@ const buildEditor = ({
       });
       canvas.renderAll();
     },
-
 
     getActiveFontLinethrough: () => {
       const selectedObject = selectedObjects[0];
@@ -341,8 +345,6 @@ const buildEditor = ({
       return value;
     },
 
-
-
     changeFontStyle: (value: string) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {
@@ -353,7 +355,6 @@ const buildEditor = ({
       });
       canvas.renderAll();
     },
-
 
     getActiveFontStyle: () => {
       const selectedObject = selectedObjects[0];
@@ -368,7 +369,6 @@ const buildEditor = ({
       return value;
     },
 
-
     changeFontWeight: (value: number) => {
       canvas.getActiveObjects().forEach((object) => {
         if (isTextType(object.type)) {
@@ -380,14 +380,12 @@ const buildEditor = ({
       canvas.renderAll();
     },
 
-
     changeOpacity: (value: number) => {
       canvas.getActiveObjects().forEach((object) => {
         object.set({ opacity: value });
       });
       canvas.renderAll();
     },
-
 
     bringForward: () => {
       canvas.getActiveObjects().forEach((object) => {
@@ -398,7 +396,6 @@ const buildEditor = ({
       workspace?.sendToBack();
     },
 
-
     sendBackwards: () => {
       canvas.getActiveObjects().forEach((object) => {
         canvas.sendBackwards(object);
@@ -407,7 +404,6 @@ const buildEditor = ({
       const workspace = getWorkspace();
       workspace?.sendToBack();
     },
-
 
     changeStrokeColor: (value: string) => {
       setStrokeColor(value);
@@ -425,7 +421,6 @@ const buildEditor = ({
       canvas.renderAll();
     },
 
-
     changeStrokeWidth: (value: number) => {
       setStrokeWidth(value);
       canvas.getActiveObjects().forEach((object) => {
@@ -437,7 +432,6 @@ const buildEditor = ({
       canvas.renderAll();
     },
 
-
     changeStrokeDashArray: (value: number[]) => {
       setStrokeDashArray(value);
       canvas.getActiveObjects().forEach((object) => {
@@ -445,7 +439,6 @@ const buildEditor = ({
       });
       canvas.renderAll();
     },
-
 
     changeFontFamily: (value: string) => {
       setFontFamily(value);
@@ -457,7 +450,6 @@ const buildEditor = ({
       });
       canvas.renderAll();
     },
-
 
     getActiveFontWeight: () => {
       const selectedObject = selectedObjects[0];
@@ -472,7 +464,6 @@ const buildEditor = ({
       return value;
     },
 
-
     getActiveFontFamily: () => {
       const selectedObject = selectedObjects[0];
       if (!selectedObject) {
@@ -484,7 +475,6 @@ const buildEditor = ({
       return value;
     },
 
-
     changeFillColor: (value: string) => {
       setFillColor(value), console.log("color changed");
       canvas.getActiveObjects().forEach((object) => {
@@ -492,7 +482,6 @@ const buildEditor = ({
       });
       canvas.renderAll();
     },
-
 
     addCircle: () => {
       const object = new fabric.Circle({
@@ -504,7 +493,6 @@ const buildEditor = ({
       });
       addToCanvas(object);
     },
-
 
     addSoftRectangle: () => {
       const object = new fabric.Rect({
@@ -519,7 +507,6 @@ const buildEditor = ({
       addToCanvas(object);
     },
 
-
     addRectangle: () => {
       const object = new fabric.Rect({
         ...RECTANGLE_OPTIONS,
@@ -531,7 +518,6 @@ const buildEditor = ({
       addToCanvas(object);
     },
 
-
     addTriangle: () => {
       const object = new fabric.Triangle({
         ...TRIANGLE_OPTIONS,
@@ -542,7 +528,6 @@ const buildEditor = ({
       });
       addToCanvas(object);
     },
-
 
     addInverseTriangle: () => {
       const HEIGHT = TRIANGLE_OPTIONS.width;
@@ -586,7 +571,6 @@ const buildEditor = ({
       );
       addToCanvas(object);
     },
-
 
     canvas,
 
@@ -634,7 +618,6 @@ const buildEditor = ({
   };
 };
 
-
 export const useEditor = ({
   clearSelectionCallback
 }: EditorHookProps) => {
@@ -665,7 +648,6 @@ export const useEditor = ({
     canvas,
     container,
   });
-
 
   useCanvasEvents({
     save,

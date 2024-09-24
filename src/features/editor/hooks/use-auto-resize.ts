@@ -8,10 +8,7 @@ interface UseAutoResizeProps {
 
 
 
-export const useAutoResize = ({
-  canvas,
-  container,
-}: UseAutoResizeProps) => {
+export const useAutoResize = ({ canvas, container }: UseAutoResizeProps) => {
   const autoZoom = useCallback(() => {
     if (!canvas || !container) return;
 
@@ -24,11 +21,11 @@ export const useAutoResize = ({
     const center = canvas.getCenter();
 
     const zoomRatio = 0.85;
+    const localWorkspace = canvas
+      .getObjects()
+      .find((object) => object.name === "clip");
 
-    const localWorkspace = canvas.getObjects().find((object) => object.name === "clip");
-
-
-    //  @ts-ignore
+    // @ts-ignore
     const scale = fabric.util.findScaleToFit(localWorkspace, {
       width: width,
       height: height,
