@@ -48,6 +48,26 @@ const buildEditor = ({
   strokeDashArray,
   setStrokeDashArray,
 }: BuildEditorProps): Editor => {
+  const generateSaveOptions = () => {
+    const { width, height, left, top } = getWorkspace() as fabric.Rect;
+    return {
+      name: "Image",
+      format: "png",
+      quality: 1,
+      width,
+      height,
+      left,
+      top,
+    };
+  };
+
+  const savePNG = () => {
+    const options = generateSaveOptions();
+    canvas.setViewportTransform([1,0,0,1,0,0]);
+    const dataUrl = canvas.toDataURL(options);
+    
+  }
+
   const getWorkspace = () => {
     return canvas.getObjects().find((object) => object.name === "clip");
   };
@@ -724,11 +744,11 @@ export const useEditor = ({
     );
     canvasHistory.current = [currentState];
     setHistoryIndex(0);
-  }, 
-  [
-    canvasHistory, //no need, this is from useRef
-    setHistoryIndex, //no need, this is from useState
-  ]);
+  },
+    [
+      canvasHistory, //no need, this is from useRef
+      setHistoryIndex, //no need, this is from useState
+    ]);
 
   return { init, editor }
 };

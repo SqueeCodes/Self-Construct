@@ -58,5 +58,15 @@ export const useHotkeys = ({
       event.preventDefault();
       save(true);
     }
+
+    if (isCtrlKey && event.key === "a") {
+      event.preventDefault();
+      canvas?.discardActiveObject();
+
+      const allObjects = canvas?.getObjects().filter((object) => object.selectable);
+
+      canvas?.setActiveObject(new fabric.ActiveSelection(allObjects, { canvas }));
+      canvas?.renderAll();
+    }
   });
 };
