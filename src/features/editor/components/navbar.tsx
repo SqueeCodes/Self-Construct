@@ -13,18 +13,17 @@ import {
 import { Logo } from "./logo";
 
 import { Hint } from "./hint";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "../../../components/ui/button";
+import { Separator } from "../../../components/ui/separator";
 
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "../../../components/ui/dropdown-menu";
 import { ActiveTool, Editor } from "../types";
-import { cn } from "@/lib/utils";
-import { Editor } from "./editor";
+import { cn } from "../../../lib/utils";
 
 interface NavbarProps {
   editor: Editor | undefined;

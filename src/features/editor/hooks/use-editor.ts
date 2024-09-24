@@ -18,6 +18,7 @@ import {
   FONT_FAMILY,
   FONT_WEIGHT,
   FONT_SIZE,
+  JSON_KEYS,
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
 import { createFilter, isTextType } from "../utils";
@@ -593,7 +594,15 @@ export const useEditor = ({
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
   const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
 
-  const { save, canRedo, canUndo, redo, undo } = useHistory({ canvas });
+  const {
+    save,
+    canRedo,
+    canUndo,
+    redo,
+    undo,
+    canvasHistory,
+    setHistoryIndex,
+  } = useHistory({ canvas });
 
   const { copy, paste } = useClipboard({ canvas });
 
@@ -638,24 +647,24 @@ export const useEditor = ({
     }
 
     return undefined;
-  }, 
-  [
-    canRedo,
-    canUndo,
-    undo,
-    redo,
-    save,
-    autoZoom,
-    copy,
-    paste,
-    canvas,
-    fillColor,
-    strokeWidth,
-    strokeColor,
-    selectedObjects,
-    strokeDashArray,
-    fontFamily,   //<- very import to always add after adding to your buildEditor
-  ]);
+  },
+    [
+      canRedo,
+      canUndo,
+      undo,
+      redo,
+      save,
+      autoZoom,
+      copy,
+      paste,
+      canvas,
+      fillColor,
+      strokeWidth,
+      strokeColor,
+      selectedObjects,
+      strokeDashArray,
+      fontFamily,   //<- very import to always add after adding to your buildEditor
+    ]);
 
   const init = useCallback(({
     initialCanvas,
@@ -699,7 +708,17 @@ export const useEditor = ({
 
     setCanvas(initialCanvas);
     setContainer(initialContainer);
-  }, []);
+
+    const currentState = JSON.stringify(
+      initialCanvas.toJSON(JSON_KEYS)
+    );
+    canvasHistory.current = [currentState];
+    setHistoryIndex(0);
+  }, 
+  [
+    canvasHistory, //no need, this is from useRef
+    setHistoryIndex, //no need, this is from useState
+  ]);
 
   return { init, editor }
 };
