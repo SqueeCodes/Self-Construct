@@ -25,6 +25,11 @@ import { useClipboard } from "./use-clipboard";
 import { useHistory } from "./use-history";
 
 const buildEditor = ({
+  save,
+  redo,
+  undo,
+  canRedo,
+  canUndo,
   autoZoom,
   copy,
   paste,
@@ -64,6 +69,8 @@ const buildEditor = ({
   };
 
   return {
+    canUndo,
+    canRedo,
     autoZoom,
     getWorkspace,
     zoomIn: () => {
@@ -91,13 +98,13 @@ const buildEditor = ({
 
       workspace?.set(value);
       autoZoom();
-      //TODO: Save
+      save();
     },
     changeBackground: (value: string) => {
       const workspace = getWorkspace();
       workspace?.set({ fill: value });
       canvas.renderAll();
-      //TODO: Save
+      save();
     },
 
     enableDrawingMode: () => {
@@ -110,8 +117,8 @@ const buildEditor = ({
     disableDrawingMode: () => {
       canvas.isDrawingMode = false;
     },
-
-
+    onUndo: () => undo(),
+    onRedo: () => redo(),
     onCopy: () => copy(),
     onPaste: () => paste(),
 

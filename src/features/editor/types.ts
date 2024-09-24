@@ -178,7 +178,7 @@ export interface EditorHookProps {
 export type BuildEditorProps = {
   undo: () => void;
   redo: () => void;
-  save: () => void;
+  save: (skip?: boolean) => void;
   canUndo: () => boolean;
   canRedo: () => boolean;
   autoZoom: () => void;
@@ -199,6 +199,10 @@ export type BuildEditorProps = {
 };
 
 export interface Editor {
+  onUndo: () => void;
+  onRedo: () => void;
+  canUndo: () => boolean;
+  canRedo: () => boolean;
   autoZoom: () => void;
   zoomIn: () => void;
   zoomOut: () => void;
