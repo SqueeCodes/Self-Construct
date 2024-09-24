@@ -586,7 +586,7 @@ export const useEditor = ({
   const [strokeWidth, setStrokeWidth] = useState(STROKE_WIDTH);
   const [strokeDashArray, setStrokeDashArray] = useState<number[]>(STROKE_DASH_ARRAY);
 
-  const { save } = useHistory();
+  const { save, canRedo, canUndo, redo, undo } = useHistory({ canvas });
 
   const { copy, paste } = useClipboard({ canvas });
 
@@ -607,6 +607,11 @@ export const useEditor = ({
   const editor = useMemo(() => {
     if (canvas) {
       return buildEditor({
+        save,
+        undo,
+        redo,
+        canUndo,
+        canRedo,
         autoZoom,
         copy,
         paste,
@@ -626,7 +631,13 @@ export const useEditor = ({
     }
 
     return undefined;
-  }, [
+  }, 
+  [
+    canRedo,
+    canUndo,
+    undo,
+    redo,
+    save,
     autoZoom,
     copy,
     paste,
