@@ -20,20 +20,64 @@ export const useHistory = ({ canvas }: UseHistoryProps) => {
     return historyIndex < canvasHistory.current.length - 1;
   }, [historyIndex]);
 
-  const save = useCallback(() => {
+  const save = useCallback((skip = false) => {
     if (!canvas) return;
     const currentState = canvas.toJSON(JSON_KEYS);
     const json = JSON.stringify(currentState);
 
-    if (!skipSave.current) {
+    if (!skip && !skipSave.current) {
       canvasHistory.current.push(json);
       setHistoryIndex(canvasHistory.current.length - 1);
     }
 
     //TODO: Save callback
-  }, 
-  [
-    canvas,
-  ]);
-  return { save };
+  },
+    [
+      canvas,
+    ]);
+
+  const undo = useCallback(() => {
+    if (canUndo()) {
+      skipSave.current = true;
+      canvas?.clear().renderAll();
+
+      const previousIndex = historyIndex - 1;
+      const previousState = JSON.parse(
+        canvasHistory.current[previousIndex]
+      );
+      canvas?.loadFromJSON(previousState, () => {
+        canvas.renderAll();
+        setHistoryIndex(previousIndex);
+        skipSave.current = false;
+      });
+    }
+  }, [canUndo, canvas, historyIndex]);
+
+  const redo = useCallback(() => {
+    if (canRedo()) {
+      skipSave.current = true;
+      canvas?.clear().renderAll();
+
+      const nextIndex = historyIndex + 1;
+      const nextState = JSON.parse(
+        canvasHistory.current[nextIndex]
+      );
+      canvas?.loadFromJSON(nextState, () => {
+        canvas.renderAll();
+        setHistoryIndex(nextIndex);
+        skipSave.current = false;
+      });
+    }
+
+  }, [canvas, historyIndex, canRedo]);
+
+  return {
+    save, 
+    canUndo, 
+    canRedo, 
+    undo,
+    redo,
+    setHistoryIndex,
+    canvasHistory,
+  };
 };
