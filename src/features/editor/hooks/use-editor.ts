@@ -1,5 +1,4 @@
 import { fabric } from "fabric";
-import { ITextboxOptions } from "fabric/fabric-impl";
 import { useCallback, useState, useMemo } from "react";
 import { useAutoResize } from "./use-auto-resize";
 import {
@@ -21,7 +20,12 @@ import {
   JSON_KEYS,
 } from "../types";
 import { useCanvasEvents } from "./use-canvas-events";
-import { createFilter, isTextType } from "../utils";
+import {
+  createFilter,
+  downloadFile,
+  isTextType,
+  transformText
+} from "../utils";
 import { useClipboard } from "./use-clipboard";
 import { useHistory } from "./use-history";
 import { useHotkeys } from "./use-hotkeys";
@@ -63,10 +67,39 @@ const buildEditor = ({
 
   const savePNG = () => {
     const options = generateSaveOptions();
-    canvas.setViewportTransform([1,0,0,1,0,0]);
+
+    canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
     const dataUrl = canvas.toDataURL(options);
-    
+
+    downloadFile(dataUrl, "png");
   }
+
+  const saveSVG = () => {
+    const options = generateSaveOptions();
+
+    canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+    const dataUrl = canvas.toDataURL(options);
+
+    downloadFile(dataUrl, "svg");
+  }
+
+  const saveJpg = () => {
+    const options = generateSaveOptions();
+
+    canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+    const dataUrl = canvas.toDataURL(options);
+
+    downloadFile(dataUrl, "jpg");
+  }
+
+  const saveJson = async () => {
+   const dataUrl = canvas.toJSON(JSON_KEYS);
+
+   await transformText(dataUrl.objects);
+   const fileString = `data:text/json;charset=utf-8,${encodeURIComponent(
+    JSON.stringify(dataUrl, null, "\t"),
+   )}`
+  };
 
   const getWorkspace = () => {
     return canvas.getObjects().find((object) => object.name === "clip");

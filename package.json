@@ -41,6 +41,7 @@
     "unsplash-js": "^7.0.19",
     "uploadthing": "^6.13.3",
     "use": "^3.1.1",
+    "uuidv4": "^6.2.13",
     "zod": "^3.23.8"
   },
   "devDependencies": {
