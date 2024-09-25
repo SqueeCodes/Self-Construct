@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { auth } from "../auth";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
   return (
     <div>
-      
-      <Button size="lg">Click me!</Button>
+      {JSON.stringify(session)}
     </div>
   );
 }
