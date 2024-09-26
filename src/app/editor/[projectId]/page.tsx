@@ -1,8 +1,10 @@
-import { Editor } from "@/features/editor/components/editor";
+import { Editor } from "../../../features/editor/components/editor"; 
 
-const EditorProjectIdPage = () => {
+import { protectServer } from "../../../features/auth/utils";
+
+const EditorProjectIdPage = async () => {
+  await protectServer();
   return <Editor />
-
 };
 
 export default EditorProjectIdPage;
