@@ -13,9 +13,7 @@ import { Button } from "../../../components/ui/button";
 import { Separator } from "../../../components/ui/separator";
 
 
-
-
-export const SignInCard = () => {
+export const SignUpCard = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -34,7 +32,7 @@ export const SignInCard = () => {
     });
   };
 
-  const onProviderSignIn = (provider: "github" | "google") => {
+  const onProviderSignUp = (provider: "github" | "google") => {
     signIn(provider, { callbackUrl: "/" });
   };
 
@@ -42,7 +40,7 @@ export const SignInCard = () => {
     <Card className="w-full h-full p-8">
       <CardHeader className="px-0 pt-0">
         <CardTitle>
-          Login to continue
+          Create an account
         </CardTitle>
         <CardDescription>
           Use your email or another service to continue
@@ -77,7 +75,7 @@ export const SignInCard = () => {
         <Separator />
         <div className="flex flex-col gap-y-2.5">
           <Button
-            onClick={() => onProviderSignIn("google")}
+            onClick={() => onProviderSignUp("google")}
             variant="outline"
             size="lg"
             className="w-full relative"
@@ -86,7 +84,7 @@ export const SignInCard = () => {
             Continue with Google
           </Button>
           <Button
-            onClick={() => onProviderSignIn("github")}
+            onClick={() => onProviderSignUp("github")}
             variant="outline"
             size="lg"
             className="w-full relative"
@@ -96,7 +94,7 @@ export const SignInCard = () => {
           </Button>
         </div>
         <p className="text-xs text-muted-foreground">
-          Don&apos;t have an account? <Link href="/sign-up"><span className="text-sky-700 hover:underline">Sign up</span></Link>
+          Already have an account? <Link href="/sign-in"><span className="text-sky-700 hover:underline">Sign in</span></Link>
         </p>
       </CardContent>
     </Card>
