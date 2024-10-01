@@ -1,19 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
+import { signIn } from "next-auth/react";
 import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { Input } from "../../../components/ui/input";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../../../components/ui/card";
 import { TriangleAlert } from "lucide-react";
-import { Input } from "../../../components/ui/input";
+
 import { Button } from "../../../components/ui/button";
 import { Separator } from "../../../components/ui/separator";
-
-
-
 
 export const SignInCard = () => {
   const [email, setEmail] = useState("");
@@ -22,9 +26,7 @@ export const SignInCard = () => {
   const params = useSearchParams();
   const error = params.get("error");
 
-  const onCredentialSignIn = (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const onCredentialSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     signIn("credentials", {
@@ -41,9 +43,7 @@ export const SignInCard = () => {
   return (
     <Card className="w-full h-full p-8">
       <CardHeader className="px-0 pt-0">
-        <CardTitle>
-          Login to continue
-        </CardTitle>
+        <CardTitle>Login to continue</CardTitle>
         <CardDescription>
           Use your email or another service to continue
         </CardDescription>
@@ -96,7 +96,10 @@ export const SignInCard = () => {
           </Button>
         </div>
         <p className="text-xs text-muted-foreground">
-          Don&apos;t have an account? <Link href="/sign-up"><span className="text-sky-700 hover:underline">Sign up</span></Link>
+          Don&apos;t have an account?{" "}
+          <Link href="/sign-up">
+            <span className="text-sky-700 hover:underline">Sign up</span>
+          </Link>
         </p>
       </CardContent>
     </Card>

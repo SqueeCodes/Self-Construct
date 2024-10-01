@@ -1,6 +1,7 @@
-import NextAuth from "next-auth"
-import GitHub from "next-auth/providers/github"
-import Google from "next-auth/providers/google"
+import NextAuth from "next-auth";
+import GitHub from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
+import Credentials from "next-auth/providers/credentials";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { JWT } from "next-auth/jwt";
 
@@ -14,7 +15,18 @@ declare module "next-auth/jwt" {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db),
-  providers: [GitHub, Google],
+  providers: [Credentials({
+    credentials: {
+      email: { label: "Email", type: "email" },
+      password: { label: "Password", type: "password" },
+    },
+    async authorize(credentials) {
+      console.log({ credentials });
+
+      
+      return null;
+    }
+  }), GitHub, Google],
   pages: {
     signIn: "/sign-in",
     error: "/sign-in"
