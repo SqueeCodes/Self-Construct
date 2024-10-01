@@ -1,4 +1,4 @@
-import { toast } from "sonner";
+// import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 
@@ -23,7 +23,8 @@ export const useSignUp = () => {
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("User created");
+      // toast.success("User created");
+      console.log("registered")
     }
   });
 
