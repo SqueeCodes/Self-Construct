@@ -1,6 +1,6 @@
 import { z } from "zod";
 import bcrypt from "bcryptjs";
-import NextAuth, { CredentialsSignin } from "next-auth";
+import type { NextAuthConfig } from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
@@ -27,6 +27,7 @@ declare module "@auth/core/jwt" {
     id: string | undefined;
   }
 }
+
 
 export default {
   adapter: DrizzleAdapter(db),
