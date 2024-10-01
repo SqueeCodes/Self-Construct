@@ -1,4 +1,4 @@
-// import { toast } from "sonner";
+import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 
@@ -17,14 +17,13 @@ export const useSignUp = () => {
       const response = await client.api.users.$post({ json });
 
       if (!response.ok) {
-        throw new Error("Something went wrong");
+        throw new Error("Something went wrong :((");
       }
 
       return await response.json();
     },
     onSuccess: () => {
-      // toast.success("User created");
-      console.log("registered")
+      toast.success("User created");
     }
   });
 

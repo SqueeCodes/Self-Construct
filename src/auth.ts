@@ -1,4 +1,6 @@
-import NextAuth from "next-auth";
+import { z } from "zod";
+import bcrypt from "bcryptjs";
+import NextAuth, { CredentialsSignin } from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
@@ -6,6 +8,14 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { JWT } from "next-auth/jwt";
 
 import { db } from "./db/drizzle";
+import { users } from "./db/schema";
+import { eq } from "drizzle-orm";
+
+
+const CredentialsSchema = z.object({
+  email: z.string().email(), password: z.string(),
+});
+
 
 declare module "next-auth/jwt" {
   interface JWT {
@@ -21,9 +31,35 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       password: { label: "Password", type: "password" },
     },
     async authorize(credentials) {
-      console.log({ credentials });
+      const validatedFields = CredentialsSchema.safeParse(credentials);
 
-      
+      if (!validatedFields.success) {
+        return null;
+      }
+
+      const { email, password } = validatedFields.data;
+
+      const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email));
+
+      if (!user || !user.password) {
+        return null;
+      }
+
+      const passwordsMatch = await bcrypt.compare(
+        password,
+        user.password,
+      )
+
+      if (!passwordsMatch) {
+        return null;
+      }
+
+      return user;
+
+
       return null;
     }
   }), GitHub, Google],
