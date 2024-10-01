@@ -14,13 +14,14 @@ import { Separator } from "../../../components/ui/separator";
 
 
 export const SignUpCard = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const params = useSearchParams();
   const error = params.get("error");
 
-  const onCredentialSignIn = (
+  const onCredentialSignUp= (
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
@@ -53,7 +54,14 @@ export const SignUpCard = () => {
         </div>
       )}
       <CardContent className="space-y-5 px-0 pb-0">
-        <form onSubmit={onCredentialSignIn} className="space-y-2.5">
+        <form onSubmit={onCredentialSignUp} className="space-y-2.5">
+          <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Full name"
+            type="text"
+            required
+          />
           <Input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
