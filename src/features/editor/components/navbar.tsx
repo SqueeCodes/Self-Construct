@@ -16,6 +16,7 @@ import { Logo } from "./logo";
 import { Hint } from "./hint";
 import { Button } from "../../../components/ui/button";
 import { Separator } from "../../../components/ui/separator";
+import { UserButton } from "../../auth/components/user-button";
 
 import {
   DropdownMenu,
@@ -172,7 +173,7 @@ export const Navbar = ({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          {/* ADD USER BUTTON */}
+          <UserButton />
         </div>
       </div>
     </nav>
