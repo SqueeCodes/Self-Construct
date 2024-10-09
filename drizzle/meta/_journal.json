@@ -15,6 +15,13 @@
       "when": 1727810640680,
       "tag": "0001_handy_shen",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1728487372223,
+      "tag": "0002_productive_big_bertha",
+      "breakpoints": true
     }
   ]
 }
