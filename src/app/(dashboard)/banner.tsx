@@ -1,27 +1,32 @@
-import { ArrowRight, Sparkles } from "lucide-react";
-import { Button } from "../../components/ui/button";
+"use client";
+
 import { useRouter } from "next/navigation";
+import { ArrowRight, Sparkles } from "lucide-react";
+
+import { useCreateProject } from "../../features/projects/api/use-create-project";
+
+import { Button } from "../../components/ui/button";
 
 
 export const Banner = () => {
-  // const router = useRouter();
-  // const mutation = useCreateProject();
+  const router = useRouter();
+  const mutation = useCreateProject();
 
-  // const onClick = () => {
-  //   mutation.mutate(
-  //     {
-  //       name: "Untitled project",
-  //       json: "",
-  //       width: 900,
-  //       height: 1200,
-  //     },
-  //     {
-  //       onSuccess: ({ data }) => {
-  //         router.push(`/editor/${data.id}`);
-  //       },
-  //     },
-  //   );
-  // };
+  const onClick = () => {
+    mutation.mutate(
+      {
+        name: "Untitled project",
+        json: "",
+        width: 900,
+        height: 1200,
+      },
+      {
+        onSuccess: ({ data }) => {
+          router.push(`/editor/${data.id}`);
+        },
+      },
+    );
+  };
 
   return (
     <div className="text-white aspect-[5/1] min-h-[248px] flex gap-x-6 p-6 items-center rounded-xl bg-gradient-to-r from-[#2e62cb] via-[#0073ff] to-[#3faff5]">
@@ -38,8 +43,8 @@ export const Banner = () => {
           Turn inspiration into design in no time. Simply upload an image and let AI do the rest.
         </p>
         <Button
-          // disabled={mutation.isPending}
-          // onClick={onClick}
+          disabled={mutation.isPending}
+          onClick={onClick}
           variant="secondary"
           className="w-[160px]"
         >
