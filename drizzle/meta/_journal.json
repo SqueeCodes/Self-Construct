@@ -22,6 +22,13 @@
       "when": 1728487372223,
       "tag": "0002_productive_big_bertha",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1728573040715,
+      "tag": "0003_wild_morgan_stark",
+      "breakpoints": true
     }
   ]
 }

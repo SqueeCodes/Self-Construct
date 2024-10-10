@@ -3,6 +3,8 @@ import { fabric } from "fabric";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { ActiveTool, selectionDependentTools } from "../types";
+import { ResponseType } from "../../projects/api/use-get-project";
+
 import { useEditor } from "../hooks/use-editor";
 import { Navbar } from "./navbar";
 import { Sidebar } from "./sidebar";
@@ -22,7 +24,11 @@ import { RemoveBgSidebar } from "./remove-bg-sidebar";
 import { DrawSidebar } from "./draw-sidebar";
 import { SettingsSidebar } from "./settings-sidebar";
 
-export const Editor = () => {
+interface EditorProps {
+  initialData: ResponseType["data"];
+}
+
+export const Editor = ({ initialData }: EditorProps) => {
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
 
   const onClearSelection = useCallback(() => {
@@ -77,7 +83,10 @@ export const Editor = () => {
   return (
     <div className="h-full flex flex-col">
       <Navbar
-      editor={editor} activeTool={activeTool} onChangeActiveTool={onChangeActiveTool} />
+        editor={editor}
+        activeTool={activeTool}
+        onChangeActiveTool={onChangeActiveTool}
+      />
       <div className="absolute h-[calc(100%-68px)] w-full top-[68px] flex">
         <Sidebar
           activeTool={activeTool}

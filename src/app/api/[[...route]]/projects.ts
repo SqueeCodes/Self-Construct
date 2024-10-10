@@ -5,7 +5,7 @@ import { verifyAuth } from "@hono/auth-js";
 import { zValidator } from "@hono/zod-validator";
 
 import { db } from "../../../db/drizzle";
-import { projects, projectsInsertSchema } from "../../../db/schema"; 
+import { projects, projectsInsertSchema, users } from "../../../db/schema"; 
 const app = new Hono()
   .get(
     "/templates",
@@ -241,8 +241,8 @@ const app = new Hono()
         .values({
           name,
           json,
-          width,
           height,
+          width,
           userId: auth.token.id,
           createdAt: new Date(),
           updatedAt: new Date(),
