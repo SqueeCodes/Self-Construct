@@ -132,13 +132,13 @@ export const Navbar = ({
         <Separator orientation="vertical" className="mx-2" />
         {isPending && (
           <div className="flex items-center gap-x-2">
-            <Loader2 className="size-20px text-muted-foreground" />
+            <Loader2 className="size-4 animate-spin text-muted-foreground" />
             <div className="text-xs text-muted-foreground">Saving...</div>
           </div>
         )}
         {!isPending && isError && (
           <div className="flex items-center gap-x-2">
-            <BsCloudSlash className="size-20px text-muted-foreground" />
+            <BsCloudSlash className="size-4 text-muted-foreground" />
             <div className="text-xs text-muted-foreground">Failed to save!</div>
           </div>
         )}

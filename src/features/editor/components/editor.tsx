@@ -1,5 +1,6 @@
 "use client";
 import { fabric } from "fabric";
+import debounce from "lodash.debounce";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { ActiveTool, selectionDependentTools } from "../types";
@@ -33,16 +34,16 @@ export const Editor = ({ initialData }: EditorProps) => {
   const { mutate } = useUpdateProject(initialData.id);
 
   const debouncedSave = useCallback(
-    (values: { 
-      json: string; 
-      height: number; 
-      width: number 
-    }) => {
-      console.log("saving...")
+    debounce(
+      (values: { 
+        json: string; 
+        height: number; 
+        width: number 
+      }) => {
       mutate(values);
-    },
-    [mutate]
-  );
+    }, 
+    500
+  ), [mutate]);
   const [activeTool, setActiveTool] = useState<ActiveTool>("select");
 
   const onClearSelection = useCallback(() => {
