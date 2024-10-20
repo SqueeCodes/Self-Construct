@@ -12,7 +12,7 @@ interface UseHistoryProps {
   }) => void;
 };
 
-export const useHistory = ({ canvas }: UseHistoryProps) => {
+export const useHistory = ({ canvas, saveCallback }: UseHistoryProps) => {
   const [historyIndex, setHistoryIndex] = useState(0);
   const canvasHistory = useRef<string[]>([]);
   const skipSave = useRef(false);
@@ -35,10 +35,15 @@ export const useHistory = ({ canvas }: UseHistoryProps) => {
       setHistoryIndex(canvasHistory.current.length - 1);
     }
 
-    //TODO: Save callback
+    const workspace = canvas.getObjects().find((object) => object.name === "clip");
+    const height = workspace?.height || 0;
+    const width = workspace?.width || 0;
+
+    saveCallback?.({ json, height, width });
   },
     [
       canvas,
+      saveCallback,
     ]);
 
   const undo = useCallback(() => {
@@ -77,9 +82,9 @@ export const useHistory = ({ canvas }: UseHistoryProps) => {
   }, [canvas, historyIndex, canRedo]);
 
   return {
-    save, 
-    canUndo, 
-    canRedo, 
+    save,
+    canUndo,
+    canRedo,
     undo,
     redo,
     setHistoryIndex,
