@@ -1,15 +1,17 @@
 "use client";
 
 import { CiFileOn } from "react-icons/ci";
-import { BsCloudCheck } from "react-icons/bs";
+import { BsCloudCheck, BsCloudSlash } from "react-icons/bs";
 import { useFilePicker } from "use-file-picker";
 import {
   ChevronDown,
   Download,
+  Loader2,
   MousePointerClick,
   Redo2,
   Undo2,
 } from "lucide-react";
+import { useMutationState } from "@tanstack/react-query";
 
 import { Logo } from "./logo";
 
@@ -28,17 +30,31 @@ import { ActiveTool, Editor } from "../types";
 import { cn } from "../../../lib/utils";
 
 interface NavbarProps {
+  id: string;
   editor: Editor | undefined;
   activeTool: ActiveTool;
   onChangeActiveTool: (tool: ActiveTool) => void;
-};
+}
 
-export const Navbar = ({ 
-  editor, 
-  activeTool, 
-  onChangeActiveTool, 
+export const Navbar = ({
+  id,
+  editor,
+  activeTool,
+  onChangeActiveTool,
 }: NavbarProps) => {
-  
+  const data = useMutationState({
+    filters: {
+      mutationKey: ["project", { id }],
+      exact: true,
+    },
+    select: (mutation) => mutation.state.status,
+  });
+
+  const currentStatus = data[data.length - 1];
+
+  const isError = currentStatus === "error";
+  const isPending = currentStatus === "pending";
+
   const { openFilePicker } = useFilePicker({
     accept: ".json",
     onFilesSuccessfullySelected: ({ plainFiles }: any) => {
@@ -68,7 +84,7 @@ export const Navbar = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="min-w-60">
             <DropdownMenuItem
-               onClick={() => openFilePicker()}
+              onClick={() => openFilePicker()}
               className="flex items-center gap-x-2"
             >
               <CiFileOn className="size-8" />
@@ -95,7 +111,7 @@ export const Navbar = ({
         </Hint>
         <Hint label="Undo" side="bottom" sideOffset={10}>
           <Button
-          disabled={!editor?.canUndo()}
+            disabled={!editor?.canUndo()}
             variant="ghost"
             size="icon"
             onClick={() => editor?.onUndo()}
@@ -105,7 +121,7 @@ export const Navbar = ({
         </Hint>
         <Hint label="Redo" side="bottom" sideOffset={10}>
           <Button
-          disabled={!editor?.canRedo()}
+            disabled={!editor?.canRedo()}
             variant="ghost"
             size="icon"
             onClick={() => editor?.onRedo()}
@@ -114,10 +130,24 @@ export const Navbar = ({
           </Button>
         </Hint>
         <Separator orientation="vertical" className="mx-2" />
-        <div className="flex items-center gap-x-2">
-          <BsCloudCheck className="size-20px text-muted-foreground" />
-          <div className="text-xs text-muted-foreground">Saved</div>
-        </div>
+        {isPending && (
+          <div className="flex items-center gap-x-2">
+            <Loader2 className="size-20px text-muted-foreground" />
+            <div className="text-xs text-muted-foreground">Saving...</div>
+          </div>
+        )}
+        {!isPending && isError && (
+          <div className="flex items-center gap-x-2">
+            <BsCloudSlash className="size-20px text-muted-foreground" />
+            <div className="text-xs text-muted-foreground">Failed to save!</div>
+          </div>
+        )}
+        {!isPending && !isError && (
+          <div className="flex items-center gap-x-2">
+            <BsCloudCheck className="size-20px text-muted-foreground" />
+            <div className="text-xs text-muted-foreground">Saved</div>
+          </div>
+        )}
         <div className="ml-auto flex items-center gap-x-4">
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
@@ -127,45 +157,41 @@ export const Navbar = ({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="min-w-60">
-              <DropdownMenuItem className="flex items-center gap-x-2"
+              <DropdownMenuItem
+                className="flex items-center gap-x-2"
                 onClick={() => editor?.saveJson()}
               >
-                <CiFileOn
-                  className="size-8"
-                />
+                <CiFileOn className="size-8" />
                 <div>
                   <p>JSON</p>
                   <p>Save for later editing</p>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-x-2"
+              <DropdownMenuItem
+                className="flex items-center gap-x-2"
                 onClick={() => editor?.savePng()}
               >
-                <CiFileOn
-                  className="size-8"
-                />
+                <CiFileOn className="size-8" />
                 <div>
                   <p>PNG</p>
                   <p>Best for sharing on the web</p>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-x-2"
+              <DropdownMenuItem
+                className="flex items-center gap-x-2"
                 onClick={() => editor?.saveJpg()}
               >
-                <CiFileOn
-                  className="size-8"
-                />
+                <CiFileOn className="size-8" />
                 <div>
                   <p>JPEG</p>
                   <p>Best for Printing</p>
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-x-2"
+              <DropdownMenuItem
+                className="flex items-center gap-x-2"
                 onClick={() => editor?.saveSvg()}
               >
-                <CiFileOn
-                  className="size-8"
-                />
+                <CiFileOn className="size-8" />
                 <div>
                   <p>SVG</p>
                   <p>Best for Editing in vector software</p>
