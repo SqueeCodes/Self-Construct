@@ -30,6 +30,7 @@ import { useClipboard } from "./use-clipboard";
 import { useHistory } from "./use-history";
 import { useHotkeys } from "./use-hotkeys";
 import { useWindowEvents } from "./use-window-events";
+import { useLoadState } from "./use-load-state";
 
 const buildEditor = ({
   save,
@@ -678,6 +679,14 @@ export const useEditor = ({
     paste,
     save,
     canvas
+  });
+
+  useLoadState({
+    canvas,
+    autoZoom,
+    initialState,
+    canvasHistory,
+    setHistoryIndex,
   });
 
   const editor = useMemo(() => {
