@@ -5,7 +5,12 @@ import { JSON_KEYS } from "../types";
 
 interface UseHistoryProps {
   canvas: fabric.Canvas | null;
-}
+  saveCallback?: (values: {
+    json: string;
+    height: number;
+    width: number;
+  }) => void;
+};
 
 export const useHistory = ({ canvas }: UseHistoryProps) => {
   const [historyIndex, setHistoryIndex] = useState(0);

@@ -14,8 +14,14 @@ interface EditorProjectIdPageProps {
   };
 }
 
-const EditorProjectIdPage = ({ params }: EditorProjectIdPageProps) => {
-  const { data, isLoading, isError } = useGetProject(params.projectId);
+const EditorProjectIdPage = ({ 
+  params,
+ }: EditorProjectIdPageProps) => {
+  const {
+    data,
+    isLoading,
+    isError 
+      } = useGetProject(params.projectId);
 
   if (isLoading || !data) {
     return (
