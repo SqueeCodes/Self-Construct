@@ -7,6 +7,8 @@ import { Textarea } from "../../../components/ui/textarea";
 import { Button } from "../../../components/ui/button";
 import { useGenerateImage } from "../../ai/api/use-generate-image";
 import { useState } from "react";
+import { usePaywall } from "../../subscriptions/hooks/use-paywall";
+import { TbCrown } from "react-icons/tb";
 
 interface AiSidebarProps {
   editor: Editor | undefined;
@@ -19,7 +21,7 @@ export const AiSidebar = ({
   activeTool,
   onChangeActiveTool,
 }: AiSidebarProps) => {
-  // const { shouldBlock, triggerPaywall } = usePaywall();
+  const { shouldBlock, triggerPaywall } = usePaywall();
   const mutation = useGenerateImage();
 
   const [value, setValue] = useState("");
@@ -29,10 +31,10 @@ export const AiSidebar = ({
   ) => {
     e.preventDefault();
 
-    // if (shouldBlock) {
-    //   triggerPaywall();
-    //   return;
-    // }
+    if (shouldBlock) {
+      triggerPaywall();
+      return;
+    }
 
     mutation.mutate({ prompt: value }, {
       onSuccess: ({ data }) => {
@@ -74,6 +76,7 @@ export const AiSidebar = ({
             className="w-full"
           >
             Generate
+            <TbCrown className="size-5  text-yellow-500 translate-x-3"/>
           </Button>
         </form>
       </ScrollArea>

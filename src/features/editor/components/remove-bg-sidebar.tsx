@@ -9,6 +9,8 @@ import { ToolSidebarHeader } from "./tool-sidebar-header";
 import { ScrollArea } from "../../../components/ui/scroll-area"
 import { Button } from "../../../components/ui/button";
 import { useRemoveBg } from "../../ai/api/use-remove-background";
+import { usePaywall } from "../../subscriptions/hooks/use-paywall";
+import { TbCrown } from "react-icons/tb";
 
 
 interface RemoveBgSidebarProps {
@@ -22,7 +24,7 @@ export const RemoveBgSidebar = ({
   activeTool,
   onChangeActiveTool,
 }: RemoveBgSidebarProps) => {
-  // const { shouldBlock, triggerPaywall } = usePaywall();
+  const { shouldBlock, triggerPaywall } = usePaywall();
   const mutation = useRemoveBg();
 
   const selectedObject = editor?.selectedObjects[0];
@@ -35,10 +37,10 @@ export const RemoveBgSidebar = ({
   };
 
   const onClick = () => {
-    // if (shouldBlock) {
-    //   triggerPaywall();
-    //   return;
-    // }
+    if (shouldBlock) {
+      triggerPaywall();
+      return;
+    }
 
     mutation.mutate({
       image: imageSrc,
@@ -88,6 +90,7 @@ export const RemoveBgSidebar = ({
               className="w-full"
             >
               Remove background
+              <TbCrown  className="size-5  text-yellow-500 z-[10] translate-x-2"/>
             </Button>
           </div>
         </ScrollArea>

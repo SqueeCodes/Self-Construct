@@ -9,10 +9,7 @@ import {
   AlignLeft,
   AlignCenter,
   AlignRight,
-  Trash,
   Trash2,
-  Trash2Icon,
-  TrashIcon,
   SquareSplitHorizontal,
   Copy,
 } from "lucide-react";
@@ -25,7 +22,7 @@ import { Button } from "../../../components/ui/button";
 import { BsBorderWidth } from "react-icons/bs";
 import { isTextType } from "../utils";
 import { FaBold, FaItalic, FaStrikethrough, FaUnderline } from "react-icons/fa";
-import { TbColorFilter } from "react-icons/tb";
+import { TbColorFilter, TbCrown } from "react-icons/tb";
 import { FontSizeInput } from "./font-size-input";
 
 interface ToolbarProps {
@@ -346,14 +343,17 @@ export const Toolbar = ({
       {isImage && (
         <div className="flex items-center h-full justify-center">
           <Hint label="Remove background" side="bottom" sideOffset={5}>
-            <Button
-              onClick={() => onChangeActiveTool("remove-bg")}
-              size="icon"
-              variant="ghost"
-              className={cn(activeTool === "remove-bg" && "bg-gray-100")}
-            >
-              <SquareSplitHorizontal className="size-4 " />
-            </Button>
+            <div className="relative">
+              <TbCrown className="absolute rotate-45 left-4 top-0.5 fill-yellow-500"/>
+              <Button
+                onClick={() => onChangeActiveTool("remove-bg")}
+                size="icon"
+                variant="ghost"
+                className={cn(activeTool === "remove-bg" && "bg-gray-100")}
+              >
+                <SquareSplitHorizontal className="size-4 " />
+              </Button>
+            </div>
           </Hint>
         </div>
       )}
@@ -394,10 +394,14 @@ export const Toolbar = ({
       </div>
       <div className="flex items-center h-full justify-center">
         <Hint label="Duplicate" side="bottom" sideOffset={5}>
-          <Button onClick={() => {
-            editor?.onCopy();
-            editor?.onPaste();
-          }} size="icon" variant="ghost">
+          <Button
+            onClick={() => {
+              editor?.onCopy();
+              editor?.onPaste();
+            }}
+            size="icon"
+            variant="ghost"
+          >
             <Copy className="size-4 " />
           </Button>
         </Hint>

@@ -8,6 +8,7 @@ import { cn } from "../../../lib/utils";
 import { ScrollArea } from "../../../components/ui/scroll-area";
 import { ToolSidebarClose } from "./tool-sidebar-close";
 import { TbCrown } from "react-icons/tb";
+import { usePaywall } from "../../subscriptions/hooks/use-paywall";
 
 
 
@@ -22,7 +23,7 @@ export const TemplateSidebar = ({
   activeTool,
   onChangeActiveTool,
 }: TemplateSidebarProps) => {
-  // const { shouldBlock, triggerPaywall } = usePaywall();
+  const { shouldBlock, triggerPaywall } = usePaywall();
 
   const [ConfirmDialog, confirm] = useConfirm(
     "Are you sure?",
@@ -39,10 +40,10 @@ export const TemplateSidebar = ({
   };
 
   const onClick = async (template: ResponseType["data"][0]) => {
-    // if (template.isPro && shouldBlock) {
-    //   triggerPaywall();
-    //   return;
-    // }
+    if (template.isPro && shouldBlock) {
+      triggerPaywall();
+      return;
+    }
 
     const ok = await confirm();
 
