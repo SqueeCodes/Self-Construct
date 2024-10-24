@@ -40,6 +40,7 @@ export const TemplateSidebar = ({
   };
 
   const onClick = async (template: ResponseType["data"][0]) => {
+    
     if (template.isPro && shouldBlock) {
       triggerPaywall();
       return;

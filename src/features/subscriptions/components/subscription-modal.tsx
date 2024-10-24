@@ -68,7 +68,7 @@ export const SubscriptionModal = () => {
               Upgrade to Premium
             </Button>
             <Button className="w-full opacity-75"
-            onClick={(onOpenChange) => {onClose}}
+            onClick={() => {}}
             disabled={false}
             >
               No thanks!
