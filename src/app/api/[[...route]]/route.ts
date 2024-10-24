@@ -7,6 +7,8 @@ import users from "./users";
 import images from "./images";
 import authConfig from "../../../auth.config";
 import projects from "./projects";
+import subscriptions from "./subscriptions";
+
 
 export const runtime = "nodejs";
 
@@ -26,6 +28,7 @@ const routes = app
 .route("/users", users)
 .route("/images", images)
 .route("/projects", projects)
+.route("subscriptions", subscriptions)
 
 export const GET = handle(app);
 export const POST = handle(app);
