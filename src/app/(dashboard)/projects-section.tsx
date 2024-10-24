@@ -8,6 +8,7 @@ import {
   CopyIcon,
   FileIcon,
   Loader,
+  Loader2Icon,
   MoreHorizontal,
   Search,
   Trash,
@@ -59,7 +60,7 @@ export const ProjectsSection = () => {
       <div className="space-y-4">
         <h3 className="font-semibold text-lg">Recent projects</h3>
         <div className="flex flex-col gap-y-4 items-center justify-center h-32">
-          <Loader className="size-6 animate-spin text-muted-foreground" />
+          <Loader2Icon className="size-6 animate-spin text-muted-foreground" />
         </div>
       </div>
     );

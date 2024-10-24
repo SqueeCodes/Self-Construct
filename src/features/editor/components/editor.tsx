@@ -25,6 +25,7 @@ import { RemoveBgSidebar } from "./remove-bg-sidebar";
 import { DrawSidebar } from "./draw-sidebar";
 import { SettingsSidebar } from "./settings-sidebar";
 import { useUpdateProject } from "../../projects/api/use-update-project";
+import { TemplateSidebar } from "./template-sidebar";
 
 interface EditorProps {
   initialData: ResponseType["data"];
@@ -157,6 +158,12 @@ export const Editor = ({ initialData }: EditorProps) => {
         />
 
         <ImageSidebar
+          editor={editor}
+          activeTool={activeTool}
+          onChangeActiveTool={onChangeActiveTool}
+        />
+
+        <TemplateSidebar
           editor={editor}
           activeTool={activeTool}
           onChangeActiveTool={onChangeActiveTool}
