@@ -42,7 +42,7 @@ const EditorProjectIdPage = ({
           <Button
             asChild
             variant="secondary"
-            className="hover:bg-slate-200 hover:shadow-lg transition"
+            className="hover:bg-slate-200 hover:shadow-lg transition duration-500 ease-in-out"
           >
             <Link href="/">Back to Home</Link>
           </Button>

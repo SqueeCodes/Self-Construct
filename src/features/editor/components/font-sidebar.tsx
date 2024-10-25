@@ -47,7 +47,7 @@ export const FontSidebar = ({
               variant="secondary"
               size="lg"
               className={cn(
-                "hover:m-4 hover:bg-slate-200 transition-all w-full h-16 justify-start text-left ",
+                "hover:m-4 hover:bg-slate-200 transition duration-500 ease-in-out w-full h-16 justify-start text-left ",
                 value === font && "m-2 border-2 border-blue-500 bg-slate-300",
               )}
               style={{

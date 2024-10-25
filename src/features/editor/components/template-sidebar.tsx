@@ -89,7 +89,7 @@ export const TemplateSidebar = ({
                   }}
                   onClick={() => onClick(template)}
                   key={template.id}
-                  className="relative w-full group hover:opacity-75 transition bg-muted rounded-sm overflow-hidden border"
+                  className="relative w-full group hover:opacity-75 transition duration-500 ease-in-out bg-muted rounded-sm overflow-hidden border"
                 >
                   <Image
                     fill

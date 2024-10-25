@@ -44,7 +44,7 @@ export const FilterSidebar = ({
               key={filter}
               variant="secondary"
               size="lg"
-              className={cn("hover:m-4 hover:bg-slate-200 transition-all w-full h-16 justify-start text-left"
+              className={cn("hover:m-4 hover:bg-slate-200 transition duration-500 ease-in-out w-full h-16 justify-start text-left"
               )}
               onClick={() => editor?.changeImageFilter(filter)}
             >
