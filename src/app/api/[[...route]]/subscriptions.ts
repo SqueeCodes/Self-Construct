@@ -1,12 +1,13 @@
-import { verifyAuth } from "@hono/auth-js";
-import { Hono } from "hono";
-import { stripe } from "../../../lib/stripe";
 import Stripe from "stripe";
-import { db } from "../../../db/drizzle";
-import { subscriptions } from "../../../db/schema";
+import { Hono } from "hono";
 import { eq } from "drizzle-orm";
-import { checkIsActive } from "../../../features/subscriptions/lib";
+import { verifyAuth } from "@hono/auth-js";
 
+import { checkIsActive } from "@/features/subscriptions/lib";
+
+import { stripe } from "@/lib/stripe";
+import { db } from "@/db/drizzle";
+import { subscriptions } from "@/db/schema";
 
 const app = new Hono()
   .post("/billing", verifyAuth(), async (c) => {
