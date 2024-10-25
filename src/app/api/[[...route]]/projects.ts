@@ -4,8 +4,9 @@ import { eq, and, desc, asc } from "drizzle-orm";
 import { verifyAuth } from "@hono/auth-js";
 import { zValidator } from "@hono/zod-validator";
 
-import { db } from "../../../db/drizzle";
-import { projects, projectsInsertSchema, users } from "../../../db/schema"; 
+import { db } from "@/db/drizzle";
+import { projects, projectsInsertSchema } from "@/db/schema";
+
 const app = new Hono()
   .get(
     "/templates",
@@ -158,7 +159,6 @@ const app = new Hono()
         .partial()
     ),
     async (c) => {
-      
       const auth = c.get("authUser");
       const { id } = c.req.valid("param");
       const values = c.req.valid("json");
@@ -242,8 +242,8 @@ const app = new Hono()
         .values({
           name,
           json,
-          height,
           width,
+          height,
           userId: auth.token.id,
           createdAt: new Date(),
           updatedAt: new Date(),
