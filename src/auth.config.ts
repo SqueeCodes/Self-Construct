@@ -11,6 +11,9 @@ import { db } from "./db/drizzle";
 import { users } from "./db/schema";
 import { eq } from "drizzle-orm";
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:3000';
+
+
 const CredentialsSchema = z.object({
   email: z.string().email(),
   password: z.string(),
