@@ -1,12 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { Loader, TriangleAlert } from "lucide-react";
 
-import { Editor } from "../../../features/editor/components/editor";
+import { useGetProject } from "@/features/projects/api/use-get-project";
 
-import { useGetProject } from "../../../features/projects/api/use-get-project";
-import { Button } from "../../../components/ui/button";
-import Link from "next/link";
+import { Editor } from "@/features/editor/components/editor";
+import { Button } from "@/components/ui/button";
 
 interface EditorProjectIdPageProps {
   params: {
