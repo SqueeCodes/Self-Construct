@@ -5,6 +5,7 @@ import debounce from "lodash.debounce";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 
+import { ResponseType } from "../../projects/api/use-get-project";
 import { useUpdateProject } from "../../projects/api/use-update-project";
 
 import { 
@@ -30,7 +31,6 @@ import { AiSidebar } from "./ai-sidebar";
 import { TemplateSidebar } from "./template-sidebar";
 import { RemoveBgSidebar } from "./remove-bg-sidebar";
 import { SettingsSidebar } from "./settings-sidebar";
-import { ResponseType } from "../../projects/api/use-get-projects";
 
 interface EditorProps {
   initialData: ResponseType["data"];
